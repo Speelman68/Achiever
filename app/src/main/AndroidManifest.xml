@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Achiever">
         <activity
+            android:name=".FireBaseLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

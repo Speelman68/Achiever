@@ -4,4 +4,7 @@ import java.util.HashMap;
 
 public class Habit extends Goal{
     HashMap<Days,Boolean> scheduledDays;
+    public int streak;
+
+
 }

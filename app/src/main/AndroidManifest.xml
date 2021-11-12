@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Achiever">
         <activity
+            android:name=".calendar.EventEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".calendar.WeekViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".FireBaseLoginActivity"
             android:exported="false" />
         <activity

@@ -1,34 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#1F2B45">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="56dp"
-        android:background="@null"
-        android:onClick="weeklyAction"
-        android:text="Calendar"
-        android:textColor="@color/blue"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is a push!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/menu_image"
+        android:layout_width="match_parent"
+        android:layout_height="475dp"
+        android:src="@drawable/climbing"
+        android:contentDescription="@string/girl_climbing">
+    </ImageView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <GridLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/menu_image"
+        android:columnCount="3"
+        android:padding="15dp"
+        android:layout_margin="20dp"
+        android:rowCount="2"
+        android:background="@drawable/layout_bg">
+
+        <Button
+            android:id="@+id/Journal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:drawableBottom="@drawable/journal"
+            android:padding="8dp"
+            android:text="@string/journal" />
+
+        <Button
+            android:id="@+id/Landmarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:drawableBottom="@drawable/landmarks"
+            android:padding="8dp"
+            android:text="@string/landmarks" />
+
+        <Button
+            android:id="@+id/Summits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:drawableBottom="@drawable/summits"
+            android:padding="8dp"
+            android:text="@string/summits" />
+
+        <Button
+            android:id="@+id/Goals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:drawableBottom="@drawable/goals"
+            android:padding="8dp"
+            android:text="@string/goals" />
+
+        <Button
+            android:id="@+id/Calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:drawableBottom="@drawable/calendar"
+            android:onClick="weeklyAction"
+            android:padding="8dp"
+            android:text="@string/calendar" />
+
+        <Button
+            android:id="@+id/Progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:drawableBottom="@drawable/progress"
+            android:padding="8dp"
+            android:text="@string/progress" />
+
+    </GridLayout>
+
+</RelativeLayout>

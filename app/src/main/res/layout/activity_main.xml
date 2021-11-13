@@ -12,16 +12,18 @@
         android:id="@+id/menu_image"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:src="@drawable/climbing"
-        android:contentDescription="@string/girl_climbing">
-    </ImageView>
+        android:contentDescription="@string/girl_climbing"
+        android:src="@drawable/climbing"></ImageView>
 
     <GridLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/menu_image"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/layout_bg"
         android:columnCount="3"
         android:padding="15dp"

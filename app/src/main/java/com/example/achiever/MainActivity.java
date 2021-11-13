@@ -26,7 +26,10 @@ public class MainActivity extends AppCompatActivity{
         myAlarm();
     }
 
-
+    public void settingButton(View view)
+    {
+        startActivity(new Intent(this, FireBaseLoginActivity.class));
+    }
 
 
 

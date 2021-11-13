@@ -78,6 +78,7 @@
             android:layout_columnWeight="1"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/settings"
+            android:onClick="settingButton"
             android:padding="8dp"
             android:text="@string/settings" />
 

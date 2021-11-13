@@ -9,4 +9,5 @@
     <string name="goals">Goals</string>
     <string name="calendar">Calendar</string>
     <string name="progress">Progress</string>
+    <string name="settings">settings</string>
 </resources>

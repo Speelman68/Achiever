@@ -3,6 +3,7 @@
     package="com.example.achiever">
 
     <application
+        android:name=".User"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Achiever">
+        <activity
+            android:name=".goals.DesignHabit"
+            android:exported="false" />
+        <activity
+            android:name=".goals.DisplayHabit"
+            android:exported="false" />
         <activity
             android:name=".calendar.EventEditActivity"
             android:exported="false" />
@@ -28,7 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".notifications.NotificationReceiver"></receiver>
+
+        <receiver android:name=".notifications.NotificationReceiver" />
     </application>
 
 </manifest>

@@ -10,4 +10,13 @@
     <string name="calendar">Calendar</string>
     <string name="progress">Progress</string>
     <string name="settings">settings</string>
+    <string name="Sunday">Sunday</string>
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+    <string name="Save">Save</string>
+    <string name="Add_New_Habit">Add New Habit</string>
 </resources>

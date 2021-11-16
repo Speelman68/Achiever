@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".goals.DesignHabit">
+
+    <CheckBox
+        android:id="@+id/saturday"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:onClick="isSaturdayChecked"
+        android:text="@string/Saturday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/friday" />
+
+    <CheckBox
+        android:id="@+id/thursday"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:onClick="isThursdaysChecked"
+        android:text="@string/Thursday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wednesday" />
+
+    <CheckBox
+        android:id="@+id/friday"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:onClick="isFridayChecked"
+        android:text="@string/Friday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thursday" />
+
+    <CheckBox
+        android:id="@+id/tuesday"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:onClick="isTuesdayChecked"
+        android:text="@string/Tuesday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/monday" />
+
+    <CheckBox
+        android:id="@+id/wednesday"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:onClick="isWednesdayChecked"
+        android:text="@string/Wednesday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tuesday" />
+
+    <CheckBox
+        android:id="@+id/monday"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:onClick="isMondayChecked"
+        android:text="@string/Monday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sunday" />
+
+    <CheckBox
+        android:id="@+id/sunday"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:onClick="isSundayChecked"
+        android:text="@string/Sunday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reward" />
+
+    <EditText
+        android:id="@+id/reward"
+        android:layout_width="212dp"
+        android:layout_height="70dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habitName" />
+
+    <EditText
+        android:id="@+id/habitName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="saveHabit"
+        android:text="@string/Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saturday" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,6 +50,7 @@
             android:layout_rowWeight="1"
             android:layout_column="1"
             android:layout_columnWeight="1"
+            android:onClick="startHabit"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/landmarks"
             android:padding="8dp"

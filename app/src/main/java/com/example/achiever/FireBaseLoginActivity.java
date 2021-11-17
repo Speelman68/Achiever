@@ -125,6 +125,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         if(signInPress.getText().equals("Sign In")) {
             if(emailString.getText().toString().isEmpty()) {
                 Toast.makeText(FireBaseLoginActivity.this, "Enter Email Address", Toast.LENGTH_SHORT).show();
+                return false;
             }else {
                 if (emailString.getText().toString().trim().matches(emailPattern)) {
                     return true;
@@ -147,7 +148,6 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     {
         if(validEmail()) {
             try {
-
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
                             if (task.isSuccessful()) {

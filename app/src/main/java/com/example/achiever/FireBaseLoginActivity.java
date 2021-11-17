@@ -1,11 +1,13 @@
 package com.example.achiever;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -52,6 +54,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     private Button createAccountPress;
     private Button showHidePress;
     private SignInButton googleSignInPress;
+
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,19 +105,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(this);
-
-        if(currentUser != null || googleAccount != null){
-            signInPress.setText("Sign Out");
-            createAccountPress.setVisibility(View.GONE);
-            googleSignInPress.setVisibility((View.GONE));
-            reload();
-        }
-        else
-        {
-            signInPress.setText("Sign In");
-            createAccountPress.setVisibility(View.VISIBLE);
-            googleSignInPress.setVisibility((View.VISIBLE));
-        }
+        updateUI(currentUser);
 
         showHidePress.setText("Show");
     }
@@ -128,54 +121,74 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         }
     }
 
+    private boolean validEmail() {
+        if(signInPress.getText().equals("Sign In")) {
+            if(emailString.getText().toString().isEmpty()) {
+                Toast.makeText(FireBaseLoginActivity.this, "Enter Email Address", Toast.LENGTH_SHORT).show();
+            }else {
+                if (emailString.getText().toString().trim().matches(emailPattern)) {
+                    return true;
+                } else {
+                    Toast.makeText(FireBaseLoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean validPassword() {
+        return false;
+    }
+
     /*Create a new createAccount method that takes in an email address and password
     validates them, and then creates a new user with the createUserWithEmailAndPassword method.*/
     private void createAccount(String email, String password)
     {
-        try
-        {
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
-                        if(task.isSuccessful())
-                        {
-                            Toast.makeText(FireBaseLoginActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(FireBaseLoginActivity.this, "Could not Create Account", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-        catch(Exception e)
-        {
-            Toast.makeText(FireBaseLoginActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
-        }
+        if(validEmail()) {
+            try {
 
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(FireBaseLoginActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(FireBaseLoginActivity.this, "Could not Create Account", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            } catch (Exception e) {
+                Toast.makeText(FireBaseLoginActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
-        try{
-            if (signInPress.getText() == "Sign In") {
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
-                            if(task.isSuccessful()) {
-                                Toast.makeText(FireBaseLoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                                signInPress.setText("Sign Out");
-                                emailString.getText().clear();
-                                passwordString.getText().clear();
-                                createAccountPress.setVisibility(View.GONE);
-                                googleSignInPress.setVisibility((View.GONE));
-                            }else {
-                                Toast.makeText(FireBaseLoginActivity.this, "Unable to Login", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            } else {
-                signOut();
+        if(validEmail())
+        {
+            try{
+                if (signInPress.getText() == "Sign In") {
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(FireBaseLoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                                    signInPress.setText("Sign Out");
+                                    emailString.getText().clear();
+                                    passwordString.getText().clear();
+                                    createAccountPress.setVisibility(View.GONE);
+                                    googleSignInPress.setVisibility((View.GONE));
+                                }else {
+                                    Toast.makeText(FireBaseLoginActivity.this, "Unable to Login", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    signOut();
+                }
             }
-        }
-        catch (Exception e) {
-            Toast.makeText(FireBaseLoginActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
+            catch (Exception e) {
+                Toast.makeText(FireBaseLoginActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -190,9 +203,6 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     private void signOut() {
         mAuth.signOut();
         Toast.makeText(FireBaseLoginActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
-        signInPress.setText("Sign In");
-        createAccountPress.setVisibility(View.VISIBLE);
-        googleSignInPress.setVisibility((View.VISIBLE));
         updateUI(null);
     }
 
@@ -211,6 +221,14 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     private void reload() { }
 
     private void updateUI(FirebaseUser user) {
-
+        if (user != null) { //If user is signed in
+            signInPress.setText("Sign Out");
+            createAccountPress.setVisibility(View.GONE);
+            googleSignInPress.setVisibility((View.GONE));
+        } else {
+            signInPress.setText("Sign In");
+            createAccountPress.setVisibility(View.VISIBLE);
+            googleSignInPress.setVisibility((View.VISIBLE));
+        }
     }
 }

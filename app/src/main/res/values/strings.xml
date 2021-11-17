@@ -10,4 +10,8 @@
     <string name="calendar">Calendar</string>
     <string name="progress">Progress</string>
     <string name="settings">settings</string>
+    <string name="normal_sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="username">Email</string>
+    <string name="password">Password</string>
 </resources>

@@ -14,4 +14,5 @@
     <string name="create_account">Create Account</string>
     <string name="username">Email</string>
     <string name="password">Password</string>
+    <string name="password_hide_show">Show</string>
 </resources>

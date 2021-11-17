@@ -63,7 +63,7 @@
                 android:height="50dp"
                 android:ems="10"
                 android:hint="@string/password"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF" />
 
@@ -101,7 +101,7 @@
                 android:layout_height="36dp"
                 android:layout_row="1"
                 android:layout_column="1"
-                android:text="Show"
+                android:text="@string/password_hide_show"
                 android:textSize="10sp"
                 tools:ignore="TouchTargetSizeCheck" />
 

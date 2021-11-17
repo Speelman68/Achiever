@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -49,8 +50,8 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     private EditText passwordString;
     private Button signInPress;
     private Button createAccountPress;
+    private Button showHidePress;
     private SignInButton googleSignInPress;
-    private Button showHideBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         signInPress = findViewById(R.id.signInButton);
         createAccountPress = findViewById(R.id.createAccountButton);
         googleSignInPress = findViewById(R.id.sign_in_button);
+        showHidePress = findViewById(R.id.showHideButton);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -87,6 +89,10 @@ public class FireBaseLoginActivity extends AppCompatActivity {
           googleSignIn();
         });
 
+        showHidePress.setOnClickListener(view -> {
+            showHidePass();
+        });
+
     }
 
     public void onStart() {
@@ -107,19 +113,32 @@ public class FireBaseLoginActivity extends AppCompatActivity {
             createAccountPress.setVisibility(View.VISIBLE);
             googleSignInPress.setVisibility((View.VISIBLE));
         }
+
+        showHidePress.setText("Show");
+    }
+
+    //Function to Show or hide password
+    private void showHidePass() {
+        if(showHidePress.getText() == "Show"){
+                passwordString.setTransformationMethod(new HideReturnsTransformationMethod());
+                showHidePress.setText("Hide");
+        } else{
+                passwordString.setTransformationMethod(new PasswordTransformationMethod());
+                showHidePress.setText("Show");
+        }
     }
 
     /*Create a new createAccount method that takes in an email address and password
     validates them, and then creates a new user with the createUserWithEmailAndPassword method.*/
     private void createAccount(String email, String password)
     {
-        if(emailString.getText().length() >= 1 || passwordString.getText().length() >= 1)
+        try
         {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(FireBaseLoginActivity.this, "Created Account Succsefuly", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FireBaseLoginActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -127,22 +146,24 @@ public class FireBaseLoginActivity extends AppCompatActivity {
                         }
                     });
         }
-        else
+        catch(Exception e)
         {
-            Toast.makeText(FireBaseLoginActivity.this, "Email or Password Invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FireBaseLoginActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
-        if(emailString.getText().length() >= 1 || passwordString.getText().length() >= 1 || signInPress.getText() == "Sign Out") {
+        try{
             if (signInPress.getText() == "Sign In") {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
                             if(task.isSuccessful()) {
                                 Toast.makeText(FireBaseLoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                                 signInPress.setText("Sign Out");
+                                emailString.getText().clear();
+                                passwordString.getText().clear();
                                 createAccountPress.setVisibility(View.GONE);
                                 googleSignInPress.setVisibility((View.GONE));
                             }else {
@@ -152,8 +173,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
             } else {
                 signOut();
             }
-        } else {
-            Toast.makeText(FireBaseLoginActivity.this, "Email or Password Invalid", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e) {
+            Toast.makeText(FireBaseLoginActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
         }
     }
 

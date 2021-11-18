@@ -12,32 +12,30 @@ import android.os.Bundle;
 import android.view.View;
 
 
-import com.example.achiever.goals.DesignHabit;
+import com.example.achiever.calendar.WeekViewActivity;
 import com.example.achiever.goals.DisplayHabit;
 import com.example.achiever.notifications.NotificationReceiver;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity{
-    public static User user;
+    User user;
     Context context;
-    Gson gson;
     Intent habitIntent;
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userCheck();
-        gson = new Gson();
     }
 
     public void settingButton(View view)
@@ -45,14 +43,20 @@ public class MainActivity extends AppCompatActivity{
         startActivity(new Intent(this, FireBaseLoginActivity.class));
     }
 
-    private void userCheck(){
-        if (user != null){
-            System.out.println("Old");
-            return;
+    private void userCheck() throws IOException {
+        if (user == null){
+            if (loadUser()) {
+                System.out.println("Loaded");
+                return;
+            }
+            else{
+                System.out.println("New user");
+                user = new User();
+                saveUser();
+            }
         }
-        user = new User();
-        System.out.println("New");
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void startHabit(View view)
     {
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity{
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void weeklyAction(View view)
     {
-        habitIntent = new Intent(this, DesignHabit.class);
+        habitIntent = new Intent(this, WeekViewActivity.class);
         startActivity(habitIntent);
 
     }
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        user = ((User) this.getApplication());
+
     }
 
     public void myAlarm() {
@@ -95,43 +99,59 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private void saveUser() {
-        Gson gson = new Gson();
+    private void saveUser() throws IOException {
+        File path = context.getFilesDir();
+        File file = new File(path, "user.txt");
         String userString = gson.toJson(user);
+        FileOutputStream stream = null;
         try {
-            FileWriter out = new FileWriter(new File("user.txt"));
-            out.write(userString);
-            out.close();
+            stream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            stream.write(userString.getBytes());
         } catch (IOException e) {
-//            Logger.logError(TAG, e);
+            e.printStackTrace();
+        } finally {
+            stream.close();
+            System.out.println("Saved");
         }
     }
 
-    private void loadUser() {
-//        if (context == null) {
-//            return;
-//        }
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = context.openFileInput("user.txt");
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
-                int size = inputStream.available();
-                char[] buffer = new char[size];
-
-                inputStreamReader.read(buffer);
-
-                inputStream.close();
-                ret = new String(buffer);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
+    private boolean loadUser() {
+        if (context == null) {
+            return false;
         }
 
-        user = gson.fromJson(ret, User.class);
+        File path = context.getFilesDir();
+        File file = new File(path, "user.txt");
+
+        int length = (int) file.length();
+
+        byte[] bytes = new byte[length];
+
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            in.read(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String contents = new String(bytes);
+        System.out.println("User" + contents);
+        user = gson.fromJson(contents, User.class);
+        return true;
     }
 }

@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Achiever">
+        android:theme="@style/AppTheme.NoActionBar">
+<!--        android:theme="@style/Theme.Achiever">-->
         <activity
             android:name=".goals.DesignHabit"
             android:exported="false" />

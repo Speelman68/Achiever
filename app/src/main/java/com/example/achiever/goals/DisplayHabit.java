@@ -26,6 +26,7 @@ public class DisplayHabit extends AppCompatActivity {
 
         user = ((User) this.getApplication());
         setList();
+        user.habits.add(new Habit("first"));
 
         Button addNewButton= (Button) findViewById(R.id.addNewHabit);
         addNewButton.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +52,7 @@ public class DisplayHabit extends AppCompatActivity {
         list = user.habits;
         listView = (ListView) findViewById(R.id.listview);
         adaptHabits = new AdaptHabits(DisplayHabit.this, list, user);
+        adaptHabits.adaptHabits = adaptHabits;
         listView.setAdapter(adaptHabits);
     }
-
 }

@@ -2,7 +2,6 @@ package com.example.achiever.goals;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.CursorJoiner;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -10,14 +9,9 @@ import android.widget.TextView;
 
 import com.example.achiever.R;
 import com.example.achiever.User;
-import com.example.achiever.goals.Habit;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class DesignHabit extends AppCompatActivity {
     String description;
@@ -32,7 +26,6 @@ public class DesignHabit extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_habit);
         user = ((User) this.getApplication());
         checkedDays = new boolean[7];
@@ -42,6 +35,7 @@ public class DesignHabit extends AppCompatActivity {
         rewardView = (TextView) findViewById(R.id.reward);
 
         loadHabit();
+        super.onCreate(savedInstanceState);
     }
 
     public void loadHabit() {
@@ -49,12 +43,12 @@ public class DesignHabit extends AppCompatActivity {
             return;
 
         habitSlot = user.slot;
-        System.out.println("load");
+
         int i = 0;
         for (LinkedHashMap.Entry<String, Boolean> entry : user.habits.get(habitSlot).scheduledDays.entrySet()) {
             dayCheckBox.get(i).setChecked(entry.getValue());
             checkedDays[i] = entry.getValue();
-            System.out.println(entry.getKey() + "   " + entry.getValue());
+            i++;
         }
 
         descriptionView.setText(user.habits.get(habitSlot).getDescription());

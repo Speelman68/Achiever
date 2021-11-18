@@ -1,14 +1,25 @@
 package com.example.achiever.calendar;
 
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Event
 {
     public static ArrayList<Event> eventsList = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<Event> eventsForDate(LocalDate date)
     {
         ArrayList<Event> events = new ArrayList<>();
@@ -19,6 +30,8 @@ public class Event
                 events.add(event);
         }
 
+        DayOfWeek dow = date.getDayOfWeek();
+        String dayS = dow.getDisplayName(TextStyle.FULL_STANDALONE, Locale.ENGLISH);
         return events;
     }
 

@@ -19,6 +19,7 @@ public class AdaptHabits extends BaseAdapter implements ListAdapter {
     private ArrayList<Habit> list;
     private Context context;
     private User user;
+    public AdaptHabits adaptHabits;
 
     public AdaptHabits(Context context, ArrayList<Habit> list, User user) {
         this.list = list;
@@ -63,6 +64,16 @@ public class AdaptHabits extends BaseAdapter implements ListAdapter {
                 user.slot = position;
                 Intent habitIntent = new Intent(context, DesignHabit.class);
                 v.getContext().startActivity(habitIntent);
+            }
+        });
+
+        Button removebtn= (Button)view.findViewById(R.id.remove);
+
+        removebtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                user.habits.remove(position);
+                adaptHabits.notifyDataSetChanged();
             }
         });
 

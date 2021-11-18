@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.achiever.R;
+import com.example.achiever.User;
+import com.example.achiever.goals.Habit;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -73,13 +75,10 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     private void setEventAdapter()
     {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
+        //ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
+        ArrayList<Habit> dailyEvents = User.habitsForDate(CalendarUtils.selectedDate);
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        eventAdapter.eventAdapter = eventAdapter;
         eventListView.setAdapter(eventAdapter);
-    }
-
-    public void newEventAction(View view)
-    {
-        startActivity(new Intent(this, EventEditActivity.class));
     }
 }

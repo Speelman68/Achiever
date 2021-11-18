@@ -19,4 +19,9 @@
     <string name="Saturday">Saturday</string>
     <string name="Save">Save</string>
     <string name="Add_New_Habit">Add New Habit</string>
+    <string name="normal_sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="username">Email</string>
+    <string name="password">Password</string>
+    <string name="password_hide_show">Show</string>
 </resources>

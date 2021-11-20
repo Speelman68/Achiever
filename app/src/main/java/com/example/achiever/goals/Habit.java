@@ -21,8 +21,8 @@ public class Habit extends Goal{
         scheduledDays = new LinkedHashMap<>();
         completedDays = new LinkedHashMap<>();
         for (int i = 0;i < 7;i++){
-            scheduledDays.put(days[i], true);
-            completedDays.put(days[i], (i % 2 == 0));
+            scheduledDays.put(days[i], false);
+            completedDays.put(days[i], false);
         }
     }
 
@@ -31,15 +31,17 @@ public class Habit extends Goal{
         scheduledDays = new LinkedHashMap<>();
         completedDays = new LinkedHashMap<>();
         for (int i = 0;i < 7;i++){
-            scheduledDays.put(days[i], true);
+            scheduledDays.put(days[i], false);
             completedDays.put(days[i], false);
         }
     }
 
     public Habit(boolean[] checkedDays, String description, String reward) {
         scheduledDays = new LinkedHashMap<>();
+        completedDays = new LinkedHashMap<>();
         for (int i = 0;i < 7;i++){
             scheduledDays.put(days[i], checkedDays[i]);
+            completedDays.put(days[i], false);
         }
         setDescription(description);
         setReward(reward);

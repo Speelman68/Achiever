@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".goals.DesignHabit">
+    android:background="#1F2B45">
+tools:context=".goals.DesignHabit">
 
     <CheckBox
         android:id="@+id/saturday"
@@ -12,6 +13,7 @@
         android:layout_height="48dp"
         android:onClick="isSaturdayChecked"
         android:text="@string/Saturday"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/friday" />
@@ -22,6 +24,7 @@
         android:layout_height="48dp"
         android:onClick="isThursdaysChecked"
         android:text="@string/Thursday"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wednesday" />
@@ -32,6 +35,7 @@
         android:layout_height="48dp"
         android:onClick="isFridayChecked"
         android:text="@string/Friday"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thursday" />
@@ -42,6 +46,7 @@
         android:layout_height="48dp"
         android:onClick="isTuesdayChecked"
         android:text="@string/Tuesday"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/monday" />
@@ -52,6 +57,7 @@
         android:layout_height="48dp"
         android:onClick="isWednesdayChecked"
         android:text="@string/Wednesday"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tuesday" />
@@ -62,6 +68,7 @@
         android:layout_height="48dp"
         android:onClick="isMondayChecked"
         android:text="@string/Monday"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sunday" />
@@ -73,6 +80,7 @@
         android:layout_marginTop="28dp"
         android:onClick="isSundayChecked"
         android:text="@string/Sunday"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reward" />
@@ -85,6 +93,8 @@
         android:gravity="start|top"
         android:hint="Enter Reward"
         android:inputType="textMultiLine"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habitName" />
@@ -97,6 +107,8 @@
         android:ems="10"
         android:hint="Enter Habit"
         android:inputType="text"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"

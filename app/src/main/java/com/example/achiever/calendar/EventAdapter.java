@@ -18,6 +18,7 @@ import com.example.achiever.R;
 import com.example.achiever.goals.DesignHabit;
 import com.example.achiever.goals.Habit;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.List;
@@ -42,6 +43,8 @@ public class EventAdapter extends ArrayAdapter<Habit> {
 
         DayOfWeek dow = CalendarUtils.selectedDate.getDayOfWeek();
         String dayS = dow.getDisplayName(TextStyle.FULL_STANDALONE, Locale.ENGLISH);
+        String current = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+        boolean isCurrentDay = (dayS.equals(current));
 
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
         Button btn=(Button) convertView.findViewById(R.id.start);
@@ -54,8 +57,8 @@ public class EventAdapter extends ArrayAdapter<Habit> {
             }
         });
 
-        Boolean showBtn= (habit.completedDays.get(dayS));
-        btn.setVisibility((showBtn)? View.INVISIBLE : View.VISIBLE);
+        Boolean showBtn= (!habit.completedDays.get(dayS));
+        btn.setVisibility((showBtn && isCurrentDay) ? View.VISIBLE : View.INVISIBLE);
 
         String eventTitle = habit.getDescription();
         eventCellTV.setText(eventTitle);

@@ -17,11 +17,6 @@ import com.example.achiever.goals.DisplayHabit;
 import com.example.achiever.notifications.NotificationReceiver;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -43,19 +38,6 @@ public class MainActivity extends AppCompatActivity{
         startActivity(new Intent(this, FireBaseLoginActivity.class));
     }
 
-    private void userCheck() throws IOException {
-        if (user == null){
-            if (loadUser()) {
-                System.out.println("Loaded");
-                return;
-            }
-            else{
-                System.out.println("New user");
-                user = new User();
-                saveUser();
-            }
-        }
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void startHabit(View view)
@@ -96,62 +78,6 @@ public class MainActivity extends AppCompatActivity{
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, AlarmManager.INTERVAL_DAY, 20000, pendingIntent);
         }
-
     }
 
-    private void saveUser() throws IOException {
-        File path = context.getFilesDir();
-        File file = new File(path, "user.txt");
-        String userString = gson.toJson(user);
-        FileOutputStream stream = null;
-        try {
-            stream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            stream.write(userString.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            stream.close();
-            System.out.println("Saved");
-        }
-    }
-
-    private boolean loadUser() {
-        if (context == null) {
-            return false;
-        }
-
-        File path = context.getFilesDir();
-        File file = new File(path, "user.txt");
-
-        int length = (int) file.length();
-
-        byte[] bytes = new byte[length];
-
-        FileInputStream in = null;
-        try {
-            in = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            in.read(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        String contents = new String(bytes);
-        System.out.println("User" + contents);
-        user = gson.fromJson(contents, User.class);
-        return true;
-    }
 }

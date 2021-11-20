@@ -10,7 +10,6 @@
     <string name="calendar">Calendar</string>
     <string name="progress">Progress</string>
     <string name="settings">settings</string>
-    <string name="Sunday">Sunday</string>
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
     <string name="Wednesday">Wednesday</string>
@@ -24,4 +23,6 @@
     <string name="username">Email</string>
     <string name="password">Password</string>
     <string name="password_hide_show">Show</string>
+    <string name="Sunday">Sunday</string>
+    <string name="current_user_text">Current User:</string>
 </resources>

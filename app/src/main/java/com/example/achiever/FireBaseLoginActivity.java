@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -44,12 +45,16 @@ import java.util.concurrent.TimeUnit;
 public class FireBaseLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FireBaseCloudStorage mCloud = new FireBaseCloudStorage();
 
     private static final String TAG = "EmailPassword";
     private GoogleApi mGoogleApi;
+    private FirebaseUser currentUser;
+    private GoogleSignInAccount googleAccount;
 
     private EditText emailString;
     private EditText passwordString;
+    private TextView currentUserText;
     private Button signInPress;
     private Button createAccountPress;
     private Button showHidePress;
@@ -65,11 +70,13 @@ public class FireBaseLoginActivity extends AppCompatActivity {
 
         passwordString =findViewById(R.id.editTextPassword);
         emailString = findViewById(R.id.editTextEmail);
+        currentUserText = findViewById(R.id.current_user_textview);
         signInPress = findViewById(R.id.signInButton);
         createAccountPress = findViewById(R.id.createAccountButton);
         googleSignInPress = findViewById(R.id.sign_in_button);
         showHidePress = findViewById(R.id.showHideButton);
 
+        mCloud.setup();
         mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -102,11 +109,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(this);
+        currentUser = mAuth.getCurrentUser();
+        googleAccount = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(currentUser);
-
         showHidePress.setText("Show");
     }
 
@@ -139,19 +144,31 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     }
 
     private boolean validPassword() {
-        return false;
+        if(signInPress.getText().equals("Sign In")) {
+            if(passwordString.getText().toString().length() < 6) {
+                Toast.makeText(FireBaseLoginActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return true;
     }
 
     /*Create a new createAccount method that takes in an email address and password
     validates them, and then creates a new user with the createUserWithEmailAndPassword method.*/
     private void createAccount(String email, String password)
     {
-        if(validEmail()) {
+        if(validEmail() && validPassword()) {
             try {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(FireBaseLoginActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+                                mCloud.saveEmail(email); //Save Email to Firebase Cloud
+                                sendEmailVerification();
                             } else {
                                 Toast.makeText(FireBaseLoginActivity.this, "Could not Create Account", Toast.LENGTH_SHORT).show();
                             }
@@ -164,8 +181,8 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
-        // [START sign_in_with_email]
-        if(validEmail())
+        //Check if the use has put in a valid Email and Password
+        if(validEmail() && validPassword())
         {
             try{
                 if (signInPress.getText() == "Sign In") {
@@ -173,11 +190,8 @@ public class FireBaseLoginActivity extends AppCompatActivity {
                             .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
                                 if(task.isSuccessful()) {
                                     Toast.makeText(FireBaseLoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                                    signInPress.setText("Sign Out");
-                                    emailString.getText().clear();
-                                    passwordString.getText().clear();
-                                    createAccountPress.setVisibility(View.GONE);
-                                    googleSignInPress.setVisibility((View.GONE));
+                                    updateUI(currentUser);
+
                                 }else {
                                     Toast.makeText(FireBaseLoginActivity.this, "Unable to Login", Toast.LENGTH_SHORT).show();
                                 }
@@ -189,6 +203,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
             catch (Exception e) {
                 Toast.makeText(FireBaseLoginActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 
@@ -213,22 +228,34 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         assert user != null;
         user.sendEmailVerification()
                 .addOnCompleteListener(this, task -> {
-                    // Email sent
+                    Log.d(TAG, "Email sent.");
                 });
         // [END send_email_verification]
     }
-
-    private void reload() { }
 
     private void updateUI(FirebaseUser user) {
         if (user != null) { //If user is signed in
             signInPress.setText("Sign Out");
             createAccountPress.setVisibility(View.GONE);
-            googleSignInPress.setVisibility((View.GONE));
+            googleSignInPress.setVisibility(View.GONE);
+            emailString.setVisibility(View.GONE);
+            passwordString.setVisibility(View.GONE);
+            showHidePress.setVisibility(View.GONE);
+            currentUserText.append("Email");            //Fix This
+            emailString.getText().clear();
+            passwordString.getText().clear();
+
+            currentUserText.setVisibility(View.VISIBLE);
+
         } else {
             signInPress.setText("Sign In");
             createAccountPress.setVisibility(View.VISIBLE);
-            googleSignInPress.setVisibility((View.VISIBLE));
+            googleSignInPress.setVisibility(View.VISIBLE);
+            emailString.setVisibility(View.VISIBLE);
+            passwordString.setVisibility(View.VISIBLE);
+            showHidePress.setVisibility(View.VISIBLE);
+            currentUserText.setVisibility(View.GONE);
+            currentUserText.setText("");
         }
     }
 }

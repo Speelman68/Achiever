@@ -66,6 +66,7 @@
             android:layout_columnWeight="1"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/summits"
+            android:onClick="startLongTerm"
             android:padding="8dp"
             android:text="@string/summits" />
 

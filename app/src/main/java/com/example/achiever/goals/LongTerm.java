@@ -1,15 +1,22 @@
 package com.example.achiever.goals;
 
-import java.util.Date;
 
 public class LongTerm {
-    private Date endDate;
+    public String getDescription () {
+        return description;
+    }
 
-    public Date getEndDate() {
+
+    public String getEndDate () {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+
+    String description;
+    String endDate;
+
+    public LongTerm (String longTermDescription, String stringEndDate) {
+        this.endDate = stringEndDate;
+        this.description = longTermDescription;
     }
 }

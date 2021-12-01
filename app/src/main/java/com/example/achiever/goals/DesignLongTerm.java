@@ -18,6 +18,7 @@ import com.example.achiever.User;
 
 import java.text.BreakIterator;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DesignLongTerm extends AppCompatActivity
 
@@ -42,7 +43,7 @@ public class DesignLongTerm extends AppCompatActivity
         dateButton.setText(getTodaysDate());
     }
 
-        private String getTodaysDate () {
+        private String getTodaysDate() {
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
             int month = cal.get(Calendar.MONTH);
@@ -67,13 +68,13 @@ public class DesignLongTerm extends AppCompatActivity
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
-
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-    }
+        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+
+        }
 
     private String makeDateString(int day, int month, int year){
-        return getMonthFormat(month) + "/" + day + "/" + year;
+        return getMonthFormat(month) + " " + day + " " + year;
     }
 
     private String getMonthFormat(int month){

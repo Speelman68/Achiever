@@ -26,7 +26,6 @@ public class DisplayHabit extends AppCompatActivity {
 
         user = ((User) this.getApplication());
         setList();
-        user.habits.add(new Habit("first"));
 
         Button addNewButton= (Button) findViewById(R.id.addNewHabit);
         addNewButton.setOnClickListener(new View.OnClickListener() {

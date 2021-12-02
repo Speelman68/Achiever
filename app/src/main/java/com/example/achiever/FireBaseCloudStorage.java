@@ -36,7 +36,7 @@ public class FireBaseCloudStorage {
 
     public void saveEmail(String email) {
         dataToSave.put("email", email);
-        db.collection("users").document(email).set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("users").document().set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d(TAG, "Email has been saved");
@@ -54,7 +54,8 @@ public class FireBaseCloudStorage {
         emailRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-
+                User user = documentSnapshot.toObject(User.class);
+                String tempEmail = user.getEmail();
             }
         });
 

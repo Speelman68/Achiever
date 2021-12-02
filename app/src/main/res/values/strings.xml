@@ -4,8 +4,8 @@
     <string name="forward"><![CDATA[->]]></string>
     <string name="girl_climbing">girl climbing</string>
     <string name="journal">Journal</string>
-    <string name="landmarks">Landmarks</string>
-    <string name="summits">Summits</string>
+    <string name="landmarks">Habits</string>
+    <string name="summits">Goals</string>
     <string name="goals">Goals</string>
     <string name="calendar">Calendar</string>
     <string name="progress">Progress</string>
@@ -25,4 +25,14 @@
     <string name="password_hide_show">Show</string>
     <string name="Sunday">Sunday</string>
     <string name="current_user_text">Current User:</string>
+    <string name="add_summit">Add Summit</string>
+    <string name="title_activity_daily_habit_completion">DailyHabitCompletion</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

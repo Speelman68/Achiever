@@ -22,8 +22,19 @@ public class User extends Application {
     public int slot = -1;
     Gson gson = new Gson();
 
+    private String email;
+    private String habit;
+    private String goal;
+
     public User(){
 
+    }
+
+    public User(String email, String habit, String goal)
+    {
+        this.email = email;
+        this.habit = habit;
+        this.goal = goal;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -42,6 +53,17 @@ public class User extends Application {
         return tempHabits;
     }
 
+    //Functions for cloud storage
+    public String getEmail() {
+        return email;
+    }
 
+    public String getHabit() {
+        return habit;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
 
 }

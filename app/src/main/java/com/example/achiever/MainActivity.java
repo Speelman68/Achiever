@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.example.achiever.calendar.WeekViewActivity;
 import com.example.achiever.goals.DisplayHabit;
+import com.example.achiever.goals.DisplayLongTerm;
 import com.example.achiever.notifications.NotificationReceiver;
 import com.google.gson.Gson;
 
@@ -45,6 +46,15 @@ public class MainActivity extends AppCompatActivity{
         Intent habitIntent = new Intent(this, DisplayHabit.class);
         startActivity(habitIntent);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void startLongTerm(View view)
+    {
+        Intent longTermIntent = new Intent(this, DisplayLongTerm.class);
+        startActivity(longTermIntent);
+    }
+
+
 
     //Leave these for now, I'm using them for testing
     @RequiresApi(api = Build.VERSION_CODES.O)

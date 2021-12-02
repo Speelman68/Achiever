@@ -40,7 +40,8 @@
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/journal"
             android:padding="8dp"
-            android:text="@string/journal" />
+            android:text="@string/journal"
+            android:textColor="#FDFDFD" />
 
         <Button
             android:id="@+id/Landmarks"
@@ -50,11 +51,12 @@
             android:layout_rowWeight="1"
             android:layout_column="1"
             android:layout_columnWeight="1"
-            android:onClick="startHabit"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/landmarks"
+            android:onClick="startHabit"
             android:padding="8dp"
-            android:text="@string/landmarks" />
+            android:text="@string/landmarks"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/Summits"
@@ -68,7 +70,8 @@
             android:drawableBottom="@drawable/summits"
             android:onClick="startLongTerm"
             android:padding="8dp"
-            android:text="@string/summits" />
+            android:text="@string/summits"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/Settings"
@@ -82,7 +85,8 @@
             android:drawableBottom="@drawable/settings"
             android:onClick="settingButton"
             android:padding="8dp"
-            android:text="@string/settings" />
+            android:text="@string/settings"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/Calendar"
@@ -96,7 +100,8 @@
             android:drawableBottom="@drawable/calendar"
             android:onClick="weeklyAction"
             android:padding="8dp"
-            android:text="@string/calendar" />
+            android:text="@string/calendar"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/Progress"
@@ -109,7 +114,8 @@
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/progress"
             android:padding="8dp"
-            android:text="@string/progress" />
+            android:text="@string/progress"
+            android:textColor="#FFFFFF" />
 
     </GridLayout>
 

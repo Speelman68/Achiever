@@ -27,8 +27,6 @@ public class DisplayLongTerm extends AppCompatActivity {
         user = ((User) this.getApplication());
         setList();
 
-        user.longTerms.add(new LongTerm("Get this working", "Today")); //demo
-
         Button addNewButton = (Button) findViewById(R.id.addSummit);
         addNewButton.setOnClickListener(new View.OnClickListener() {
             @Override

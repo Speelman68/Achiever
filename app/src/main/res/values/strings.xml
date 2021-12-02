@@ -4,8 +4,8 @@
     <string name="forward"><![CDATA[->]]></string>
     <string name="girl_climbing">girl climbing</string>
     <string name="journal">Journal</string>
-    <string name="landmarks">Landmarks</string>
-    <string name="summits">Summits</string>
+    <string name="landmarks">Habits</string>
+    <string name="summits">Goals</string>
     <string name="goals">Goals</string>
     <string name="calendar">Calendar</string>
     <string name="progress">Progress</string>

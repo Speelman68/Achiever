@@ -31,7 +31,7 @@ public class DisplayLongTerm extends AppCompatActivity {
         addNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            // Adds a long term goal to the list on click.
                 user.slot = -1;
                 Intent summitIntent = new Intent(DisplayLongTerm.this, DesignLongTerm.class);
                 startActivity(summitIntent);
@@ -47,6 +47,8 @@ public class DisplayLongTerm extends AppCompatActivity {
     }
 
     private void setList() {
+        // References the list and enters it to a local variable.
+        // Adapts the list to this class, filling the ListView with the referenced list.
         list = user.longTerms;
         listView = (ListView) findViewById(R.id.listview);
         adaptLongTerms = new AdaptLongTerms(DisplayLongTerm.this, list, user);

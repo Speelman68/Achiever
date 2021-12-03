@@ -22,11 +22,13 @@ public class AdaptLongTerms extends BaseAdapter implements ListAdapter {
     public AdaptLongTerms adaptLongTerms;
 
     public AdaptLongTerms (Context context, ArrayList<LongTerm> list, User user) {
+        // This constructor determines the respective parameters the 'adaptee' class will enter.
         this.list = list;
         this.context = context;
         this.user = user;
     }
 
+    // The following 3 methods ensure the correct handling of the long term list in the 'adaptee'.
     @Override
     public int getCount() {
         return (list==null)?0:list.size();
@@ -40,12 +42,11 @@ public class AdaptLongTerms extends BaseAdapter implements ListAdapter {
     @Override
     public long getItemId(int pos) {
         return 0;
-        //OLD: list.get(pos).getId()
-        //just return 0 if your list items do not have an Id variable.
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        // Fills the parent view within the view.
         String itemDescription;
         String itemEndDate;
 
@@ -54,7 +55,7 @@ public class AdaptLongTerms extends BaseAdapter implements ListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.display_long_term_item, null);
         }
-        //Handle TextView and display string from your list
+        // Handles TextView and display string from your list
         TextView tvContact= (TextView)view.findViewById(R.id.tvContact);
         itemDescription = list.get(position).getDescription();
         itemEndDate = list.get(position).getEndDate();

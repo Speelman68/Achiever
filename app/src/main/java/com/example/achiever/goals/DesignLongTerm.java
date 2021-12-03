@@ -44,6 +44,7 @@ public class DesignLongTerm extends AppCompatActivity
     }
 
         private String getTodaysDate() {
+            // Gets today's date and returns it as a string.
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
             int month = cal.get(Calendar.MONTH);
@@ -54,9 +55,11 @@ public class DesignLongTerm extends AppCompatActivity
         }
 
         private void initDatePicker(){
+        // Initializes a Date Picker dialog button.
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet (DatePicker datePicker, int year, int month, int day) {
+                // Sets the date within the button when it is selected from the dialog.
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
@@ -74,10 +77,12 @@ public class DesignLongTerm extends AppCompatActivity
         }
 
     private String makeDateString(int day, int month, int year){
+        // This method takes a date object's components and returns them as a string.
         return getMonthFormat(month) + " " + day + " " + year;
     }
 
-    private String getMonthFormat(int month){
+    private String getMonthFormat(int month) {
+        // Returns a string depending on the number of the month.
         if (month == 1)
             return "JAN";
         if (month == 2)
@@ -111,6 +116,7 @@ public class DesignLongTerm extends AppCompatActivity
     }
 
     public void saveLongTerm(View view) {
+        // Saves the long term goal using the user reference.
         description = descriptionView.getText().toString();
         stringEndDate = dateButton.getText().toString();
 

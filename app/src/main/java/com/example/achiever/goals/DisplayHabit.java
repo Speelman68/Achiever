@@ -19,6 +19,7 @@ public class DisplayHabit extends AppCompatActivity {
     ListView listView;
     AdaptHabits adaptHabits;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

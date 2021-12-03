@@ -7,11 +7,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 
+import com.example.achiever.Firebase.FireBaseCloud;
+import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.calendar.WeekViewActivity;
 import com.example.achiever.goals.DisplayHabit;
 import com.example.achiever.goals.DisplayLongTerm;
@@ -20,6 +23,7 @@ import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -27,11 +31,21 @@ public class MainActivity extends AppCompatActivity{
     Context context;
     Intent habitIntent;
     Gson gson = new Gson();
+    String email = "";
+    FireBaseCloud mCloud;
+
+    //private SharedPreferences mPrefs = getSharedPreferences("cloud", 0);
+    //private SharedPreferences.Editor mEditor = mPrefs.edit();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        email = ((User) this.getApplication()).getEmail();
+        //email = mPrefs.getString("cloud", "");
+        mCloud = new FireBaseCloud(email);
     }
 
     public void settingButton(View view)
@@ -69,6 +83,8 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
 
+        email = ((User) this.getApplication()).getEmail();
+
     }
 
     public void myAlarm() {
@@ -88,6 +104,27 @@ public class MainActivity extends AppCompatActivity{
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, AlarmManager.INTERVAL_DAY, 20000, pendingIntent);
         }
+    }
+
+    //Database Test This code needs to be removed
+    public void progressAction(View view)
+    {
+        String days[] = {"Sun", "Mon"};
+        HashMap<String, Boolean> scheduledTest = new HashMap<>();
+        HashMap<String, Boolean> completedTest = new HashMap<>();
+        for(int i = 0; i < 2; i++)
+        {
+            scheduledTest.put(days[i], false);
+            completedTest.put(days[i], false);
+        }
+
+        String description = "Habit Test";
+        String reward = "Hamburger Test";
+        int streak = 6;
+
+        mCloud.saveHabit(scheduledTest, completedTest, description, reward, streak);
+        mCloud.saveGoal("Jan 12, 2021", "Test Description" );
+
     }
 
 }

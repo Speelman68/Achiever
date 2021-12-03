@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.achiever">
+    package="com.example.achiever" >
 
     <application
         android:name=".User"
@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar" >
         <activity
             android:name=".goals.DesignLongTerm"
             android:exported="false" />
@@ -30,11 +30,11 @@
             android:name=".calendar.WeekViewActivity"
             android:exported="false" />
         <activity
-            android:name=".FireBaseLoginActivity"
+            android:name=".Firebase.FireBaseLoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

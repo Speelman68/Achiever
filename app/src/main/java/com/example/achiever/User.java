@@ -66,4 +66,10 @@ public class User extends Application {
         return goal;
     }
 
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+
 }

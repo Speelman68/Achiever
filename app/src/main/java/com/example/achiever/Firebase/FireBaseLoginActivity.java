@@ -1,62 +1,52 @@
-package com.example.achiever;
+package com.example.achiever.Firebase;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.achiever.MainActivity;
+import com.example.achiever.R;
+import com.example.achiever.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptionsExtension;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.Api;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
-
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
 
 public class FireBaseLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FireBaseCloudStorage mCloud = new FireBaseCloudStorage();
+
 
     private static final String TAG = "EmailPassword";
     private static final int RC_SIGN_IN = 9001;
-    private GoogleApi mGoogleApi;
     private FirebaseUser currentUser;
     private GoogleSignInAccount googleAccount;
     private GoogleSignInClient mGoogleSignInClient;
 
+//    private SharedPreferences mPrefs = getSharedPreferences("cloud", 0);
+//    private SharedPreferences.Editor mEditor = mPrefs.edit();
+
+    private FireBaseCloud mCloud;
+
+    private String currentUserEmail = "";
 
     private EditText emailString;
     private EditText passwordString;
@@ -67,6 +57,10 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     private Button showHidePress;
     private SignInButton googleSignInPress;
     private Button cancelPress;
+    private Button changeEmailPress;
+    private Button resetPassPress;
+    private Button deleteAcntPress;
+
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -75,6 +69,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_login);
+
+        Intent i = new Intent(FireBaseLoginActivity.this, FireBaseCloud.class);
+        i.putExtra("email", currentUserEmail);
 
         passwordString =findViewById(R.id.editTextPassword);
         confirmPasswordString = findViewById(R.id.editTextConfirmPassword);
@@ -85,6 +82,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         googleSignInPress = findViewById(R.id.sign_in_button);
         showHidePress = findViewById(R.id.showHideButton);
         cancelPress = findViewById(R.id.cancelCreateAccountButton);
+        changeEmailPress = findViewById(R.id.changeEmailBtn);
+        resetPassPress = findViewById(R.id.resetPassBtn);
+        deleteAcntPress = findViewById(R.id.deleteAcntBtn);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -95,7 +95,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         // [END config_signin]
 
-        mCloud.setup();
+        //mCloud.setup();
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -112,7 +112,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         });
 
         googleSignInPress.setOnClickListener(view -> {
-          googleSignIn();
+          //googleSignIn();
         });
 
         showHidePress.setOnClickListener(view -> {
@@ -121,6 +121,18 @@ public class FireBaseLoginActivity extends AppCompatActivity {
 
         cancelPress.setOnClickListener(view -> {
             cancelCreateAccount();
+        });
+
+        resetPassPress.setOnClickListener(view -> {
+            updatePassword();
+        });
+
+        changeEmailPress.setOnClickListener(view -> {
+            updateEmail();
+        });
+
+        deleteAcntPress.setOnClickListener(view -> {
+            deleteAccount();
         });
 
     }
@@ -132,46 +144,10 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         updateUI(currentUser);
         showHidePress.setText("Show");
 
+        mCloud = new FireBaseCloud();
+
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-            }
-        }
-    }
-
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
 
     //Function to Show or hide password
     private void showHidePass() {
@@ -221,13 +197,22 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     validates them, and then creates a new user with the createUserWithEmailAndPassword method.*/
     private void createAccount(String email, String password)
     {
+        if(cancelPress.getVisibility() == View.GONE)
+        {
+            emailString.setText("");
+            passwordString.setText("");
+        }
         googleSignInPress.setVisibility(View.GONE);
         signInPress.setVisibility(View.GONE);
+        resetPassPress.setVisibility(View.GONE);
+        changeEmailPress.setVisibility(View.GONE);
         confirmPasswordString.setVisibility(View.VISIBLE);
         cancelPress.setVisibility(View.VISIBLE);
 
-        if(validEmail() && validPassword()) {
 
+
+
+        if(validEmail() && validPassword()) {
             try {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
@@ -235,6 +220,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
                                 Toast.makeText(FireBaseLoginActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
                                 mCloud.saveEmail(email); //Save Email to Firebase Cloud
                                 sendEmailVerification();
+                                emailString.setText("");
+                                passwordString.setText("");
+                                confirmPasswordString.setText("");
                                 updateUI(currentUser);
                             }
                             else if(!passwordString.getText().toString().equals(confirmPasswordString.getText().toString()))
@@ -262,6 +250,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         emailString.setText("");
         passwordString.setText("");
         confirmPasswordString.setText("");
+
         updateUI(currentUser);
     }
 
@@ -276,6 +265,8 @@ public class FireBaseLoginActivity extends AppCompatActivity {
                                 if(task.isSuccessful()) {
                                     Toast.makeText(FireBaseLoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                                     updateUI(currentUser);
+                                    ((User) this.getApplication()).setEmail(email);
+                                    //mEditor.putString("cloud", email);
                                     startActivity(new Intent(this, MainActivity.class));
                                 }else {
                                     Toast.makeText(FireBaseLoginActivity.this, "Unable to Login", Toast.LENGTH_SHORT).show();
@@ -292,6 +283,8 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    //Google Sign In Functions
     private void googleSignIn()
     {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -299,15 +292,167 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            updateUI(null);
+                        }
+                    }
+                });
+    }
+    //End of Google Sign in Functions
+    */
+
     private void signOut() {
         mAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
         Toast.makeText(FireBaseLoginActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
+        currentUser = null;
         updateUI(null);
     }
 
     private void updatePassword()
     {
-        String newPassword ;
+        if(passwordString.getVisibility() == View.GONE)
+        {
+            if(validEmail())
+            {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                String emailAddress = emailString.getText().toString();
+
+                auth.sendPasswordResetEmail(emailString.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "Email sent.");
+                                }
+                            }
+                        });
+            }
+
+        }
+
+        cancelPress.setVisibility(View.VISIBLE);
+        signInPress.setVisibility(View.GONE);
+        createAccountPress.setVisibility(View.GONE);
+        //googleSignInPress.setVisibility(View.VISIBLE);
+        emailString.setVisibility(View.VISIBLE);
+        passwordString.setVisibility(View.GONE);
+        showHidePress.setVisibility(View.GONE);
+        resetPassPress.setVisibility(View.VISIBLE);
+        changeEmailPress.setVisibility(View.GONE);
+        currentUserText.setVisibility(View.GONE);
+        confirmPasswordString.setVisibility(View.GONE);
+
+
+
+
+    }
+
+    private void updateEmail()
+    {
+        if(signInPress.getVisibility() == View.GONE)
+        {
+            if(validEmail())
+            {
+                if(emailString.getText().toString().equals(confirmPasswordString.getText().toString()))
+                {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    user.updateEmail(emailString.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User email address updated.");
+                                        Toast.makeText(FireBaseLoginActivity.this, "Email Updated", Toast.LENGTH_SHORT).show();
+                                        emailString.setText("");
+                                        confirmPasswordString.setText("");
+                                        startActivity(new Intent(FireBaseLoginActivity.this, MainActivity.class));
+                                    }
+                                }
+                            });
+                } else {
+                    Toast.makeText(FireBaseLoginActivity.this, "Email does not match", Toast.LENGTH_SHORT).show();
+                    emailString.setText("");
+                    confirmPasswordString.setText("");
+                }
+
+            }
+        }
+
+
+        cancelPress.setVisibility(View.VISIBLE);
+        signInPress.setVisibility(View.GONE);
+        createAccountPress.setVisibility(View.GONE);
+        //googleSignInPress.setVisibility(View.VISIBLE);
+        emailString.setVisibility(View.VISIBLE);
+        emailString.setHint("New Email");
+        passwordString.setVisibility(View.GONE);
+        showHidePress.setVisibility(View.GONE);
+        resetPassPress.setVisibility(View.GONE);
+        changeEmailPress.setVisibility(View.VISIBLE);
+        currentUserText.setVisibility(View.GONE);
+        confirmPasswordString.setVisibility(View.VISIBLE);
+        confirmPasswordString.setTransformationMethod(new HideReturnsTransformationMethod());
+        confirmPasswordString.setHint("Confirm Email");
+
+    }
+
+    private void deleteAccount()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mCloud.deleteData(user.getEmail());
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User account deleted.");
+                        }
+                    }
+                });
+
+        //Delete Cloud Data
+        mCloud.deleteData(user.getEmail());
+
+        emailString.setText("");
+        passwordString.setText("");
+        confirmPasswordString.setText("");
+
+        updateUI(null);
+
     }
 
     private void sendEmailVerification() {
@@ -326,31 +471,41 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         if (user != null) { //If user is signed in
             signInPress.setText("Sign Out");
             createAccountPress.setVisibility(View.GONE);
-            googleSignInPress.setVisibility(View.GONE);
+            //googleSignInPress.setVisibility(View.GONE);
             emailString.setVisibility(View.GONE);
             passwordString.setVisibility(View.GONE);
             showHidePress.setVisibility(View.GONE);
             confirmPasswordString.setVisibility(View.GONE);
-            currentUserText.append("Email");            //Fix This
+            currentUserText.setText("Current User: ");
+            currentUserText.append(user.getEmail());
             emailString.getText().clear();
             passwordString.getText().clear();
             cancelPress.setVisibility(View.GONE);
-
-
-
+            resetPassPress.setVisibility(View.GONE);
+            changeEmailPress.setVisibility(View.VISIBLE);
             currentUserText.setVisibility(View.VISIBLE);
+            deleteAcntPress.setVisibility(View.VISIBLE);
+
+            currentUserEmail = currentUser.getEmail();
 
         } else {
             signInPress.setText("Sign In");
             cancelPress.setVisibility(View.GONE);
             signInPress.setVisibility(View.VISIBLE);
             createAccountPress.setVisibility(View.VISIBLE);
-            googleSignInPress.setVisibility(View.VISIBLE);
+            //googleSignInPress.setVisibility(View.VISIBLE);
             emailString.setVisibility(View.VISIBLE);
             passwordString.setVisibility(View.VISIBLE);
             showHidePress.setVisibility(View.VISIBLE);
+            resetPassPress.setVisibility(View.VISIBLE);
+            changeEmailPress.setVisibility(View.GONE);
             currentUserText.setVisibility(View.GONE);
             confirmPasswordString.setVisibility(View.GONE);
+            deleteAcntPress.setVisibility(View.GONE);
         }
+    }
+
+    public String getCurrentUserEmail() {
+        return currentUserEmail;
     }
 }

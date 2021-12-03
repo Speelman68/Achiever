@@ -16,6 +16,7 @@ public class LongTerm {
     String endDate;
 
     public LongTerm (String longTermDescription, String stringEndDate) {
+        // A long term goal has an end date and a description.
         this.endDate = stringEndDate;
         this.description = longTermDescription;
     }

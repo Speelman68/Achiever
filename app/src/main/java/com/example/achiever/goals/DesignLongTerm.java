@@ -1,35 +1,34 @@
 package com.example.achiever.goals;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.achiever.DateHandler;
 import com.example.achiever.R;
 import com.example.achiever.User;
 
-import java.text.BreakIterator;
 import java.util.Calendar;
-import java.util.Date;
 
 public class DesignLongTerm extends AppCompatActivity
 
     {
+        DateHandler dateHandler = new DateHandler();
         User user;
         String description;
         String stringEndDate;
         TextView descriptionView;
-        int longTermSlot = -1;
         private DatePickerDialog datePickerDialog;
         private Button dateButton;
+        int longTermSlot;
 
 
     @Override
@@ -40,20 +39,25 @@ public class DesignLongTerm extends AppCompatActivity
         initDatePicker();
         descriptionView = (TextView) findViewById(R.id.longTermName);
         dateButton = findViewById(R.id.datePickerButton);
-        dateButton.setText(getTodaysDate());
+        dateButton.setText(dateHandler.getTodaysDate());
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null) {
+            longTermSlot = getIntent().getIntExtra("Position", -1);
+            loadLongTerm();
+        } else {
+            longTermSlot = -1;
+        }
     }
 
-        private String getTodaysDate() {
-            // Gets today's date and returns it as a string.
-            Calendar cal = Calendar.getInstance();
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            month =  month + 1;
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-
-            return makeDateString(day, month, year);
-        }
-
+    public void loadLongTerm() {
+        // Loads the long term goal that is going to be edited.
+        if (longTermSlot < 0)
+            return;
+        descriptionView.setText(user.longTerms.get(longTermSlot).getDescription());
+        dateButton.setText(user.longTerms.get(longTermSlot).getEndDate());
+    }
         private void initDatePicker(){
         // Initializes a Date Picker dialog button.
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -61,7 +65,7 @@ public class DesignLongTerm extends AppCompatActivity
             public void onDateSet (DatePicker datePicker, int year, int month, int day) {
                 // Sets the date within the button when it is selected from the dialog.
                 month = month + 1;
-                String date = makeDateString(day, month, year);
+                String date = dateHandler.makeDateString(day, month, year);
                 dateButton.setText(date);
             }
         };
@@ -76,41 +80,6 @@ public class DesignLongTerm extends AppCompatActivity
 
         }
 
-    private String makeDateString(int day, int month, int year){
-        // This method takes a date object's components and returns them as a string.
-        return getMonthFormat(month) + " " + day + " " + year;
-    }
-
-    private String getMonthFormat(int month) {
-        // Returns a string depending on the number of the month.
-        if (month == 1)
-            return "JAN";
-        if (month == 2)
-            return "FEB";
-        if (month == 3)
-            return "MAR";
-        if (month == 4)
-            return "APR";
-        if (month == 5)
-            return "MAY";
-        if (month == 6)
-            return "JUN";
-        if (month == 7)
-            return "JUL";
-        if (month == 8)
-            return "AUG";
-        if (month == 9)
-            return "SEP";
-        if (month == 10)
-            return "OCT";
-        if (month == 11)
-            return "NOV";
-        if (month == 12)
-            return "DEC";
-        //default:
-        return "JAN";
-    }
-
     public void openDatePicker(View view){
         datePickerDialog.show();
     }
@@ -122,7 +91,7 @@ public class DesignLongTerm extends AppCompatActivity
 
         LongTerm newLongTerm = new LongTerm(description, stringEndDate);
 
-        if(longTermSlot < 0){
+        if (longTermSlot < 0){
             user.longTerms.add(newLongTerm);
         }
         else {

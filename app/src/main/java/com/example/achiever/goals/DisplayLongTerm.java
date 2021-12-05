@@ -34,6 +34,9 @@ public class DisplayLongTerm extends AppCompatActivity {
             // Adds a long term goal to the list on click.
                 user.slot = -1;
                 Intent summitIntent = new Intent(DisplayLongTerm.this, DesignLongTerm.class);
+
+                summitIntent.putExtra("Position", user.slot);
+
                 startActivity(summitIntent);
             }
         });

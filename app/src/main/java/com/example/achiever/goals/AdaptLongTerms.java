@@ -2,6 +2,7 @@ package com.example.achiever.goals;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,13 +63,14 @@ public class AdaptLongTerms extends BaseAdapter implements ListAdapter {
         tvContact.setText(itemDescription + " by " + itemEndDate);
 
         //Handle buttons and add onClickListeners
-        Button callbtn= (Button)view.findViewById(R.id.btn);
+        Button callbtn = (Button)view.findViewById(R.id.btn);
 
         callbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 user.slot = position;
                 Intent longTermIntent = new Intent(context, DesignLongTerm.class);
+                longTermIntent.putExtra("Position", position);
                 v.getContext().startActivity(longTermIntent);
             }
         });

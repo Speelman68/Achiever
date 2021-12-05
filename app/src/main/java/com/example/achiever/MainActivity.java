@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.achiever.Firebase.FireBaseCloud;
 import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.calendar.WeekViewActivity;
 import com.example.achiever.goals.DisplayHabit;
@@ -28,6 +29,11 @@ public class MainActivity extends AppCompatActivity{
     Intent habitIntent;
     Gson gson = new Gson();
     DateHandler dateHandler = new DateHandler();
+    String email = "";
+    FireBaseCloud mCloud;
+
+    //private SharedPreferences mPrefs = getSharedPreferences("cloud", 0);
+    //private SharedPreferences.Editor mEditor = mPrefs.edit();
 
     @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
     @Override

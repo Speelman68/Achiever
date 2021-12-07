@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.R;
 import com.example.achiever.goals.DesignHabit;
 import com.example.achiever.goals.DisplayHabit;
@@ -67,7 +68,10 @@ public class EventAdapter extends ArrayAdapter<Habit> {
 //                Intent timerIntent = new Intent(context, TimerScreen.class);
 //                v.getContext().startActivity(timerIntent);
                 Intent timerIntent = new Intent(v.getContext(), TimerScreen.class);
+                timerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //This is not the best solution.
                 v.getContext().startActivity(timerIntent);
+
+
 
             }
         });

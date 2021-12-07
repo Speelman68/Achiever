@@ -30,6 +30,9 @@
             android:taskAffinity=""
             android:excludeFromRecents="true" />
         <activity
+            android:name=".calendar.TimerScreen"
+            android:exported="false" />
+        <activity
             android:name=".goals.DesignLongTerm"
             android:exported="false" />
         <activity
@@ -47,9 +50,10 @@
         <activity
             android:name=".calendar.WeekViewActivity"
             android:exported="false" />
-        <activity
-            android:name=".FireBaseLoginActivity"
-            android:exported="false" />
+<!--        Git would not let me push until I commented this out-->
+<!--        <activity-->
+<!--            android:name=".FireBaseLoginActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".MainActivity"
             android:exported="true">

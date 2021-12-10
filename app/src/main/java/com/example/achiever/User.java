@@ -23,7 +23,7 @@ public class User extends Application {
     public int slot = -1;
     Gson gson = new Gson();
 
-    private String email;
+    private static String email;
     private HashMap scheduledDays;
     private HashMap completedDays;
     private String habitDescription;

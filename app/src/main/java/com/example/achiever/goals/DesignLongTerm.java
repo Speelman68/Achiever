@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.achiever.DateHandler;
+import com.example.achiever.Firebase.FireBaseCloud;
 import com.example.achiever.R;
 import com.example.achiever.User;
 
@@ -21,6 +22,9 @@ import java.util.Calendar;
 public class DesignLongTerm extends AppCompatActivity
 
     {
+
+        FireBaseCloud mCloud = new FireBaseCloud();
+
         DateHandler dateHandler = new DateHandler();
         User user;
         String description;
@@ -97,6 +101,7 @@ public class DesignLongTerm extends AppCompatActivity
         else {
             user.longTerms.set(longTermSlot, newLongTerm);
         }
+        mCloud.saveGoal(description, stringEndDate);
         finish();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.achiever.goals;
 
+import com.example.achiever.Firebase.FireBaseCloud;
+
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,6 +11,9 @@ import java.util.TreeMap;
 public class Habit extends Goal{
     public HashMap<String,Boolean> scheduledDays;
     public HashMap<String,Boolean> completedDays;
+
+    FireBaseCloud mCloud = new FireBaseCloud();
+
     String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private boolean dailyCompletion;
     public int streak;
@@ -46,6 +51,7 @@ public class Habit extends Goal{
         }
         setDescription(description);
         setReward(reward);
+        mCloud.saveHabit(scheduledDays, completedDays, description, reward, 0);
     }
 
 

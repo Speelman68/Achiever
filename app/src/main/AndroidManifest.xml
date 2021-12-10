@@ -12,23 +12,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
+            android:name=".Firebase.FireBaseLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".journal.JournalActivity"
+            android:exported="false" />
+        <activity
             android:name=".goals.GoalNotAchieved"
+            android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:excludeFromRecents="true"  />
+            android:taskAffinity="" />
         <activity
             android:name=".goals.GoalAchieved"
+            android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:excludeFromRecents="true"  />
+            android:taskAffinity="" />
         <activity
             android:name=".goals.GoalCompletionCheck"
+            android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:excludeFromRecents="true" />
+            android:taskAffinity="" />
         <activity
             android:name=".calendar.TimerScreen"
             android:exported="false" />
@@ -49,11 +55,10 @@
             android:exported="false" />
         <activity
             android:name=".calendar.WeekViewActivity"
-            android:exported="false" />
-<!--        Git would not let me push until I commented this out-->
-<!--        <activity-->
-<!--            android:name=".FireBaseLoginActivity"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- Git would not let me push until I commented this out -->
+        <!-- <activity -->
+        <!-- android:name=".FireBaseLoginActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".MainActivity"
             android:exported="true">

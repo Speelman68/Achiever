@@ -18,8 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FireBaseCloud {
-    private final FirebaseFirestore db;
+    private FirebaseFirestore db;
     private static final String TAG = "DocSnippets";
+
+    private User currentUser = new User();
 
     String email;
     Map<String, Object> user;
@@ -33,7 +35,7 @@ public class FireBaseCloud {
         habit = new HashMap<>();
         goal = new HashMap<>();
 
-        email = "";
+        email = currentUser.getEmail();
 
     }
 

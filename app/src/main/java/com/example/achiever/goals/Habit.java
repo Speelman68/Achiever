@@ -1,13 +1,14 @@
 package com.example.achiever.goals;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.TreeMap;
 
 public class Habit extends Goal{
-    public LinkedHashMap<String,Boolean> scheduledDays;
-    public LinkedHashMap<String,Boolean> completedDays;
+    public HashMap<String,Boolean> scheduledDays;
+    public HashMap<String,Boolean> completedDays;
     String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private boolean dailyCompletion;
     public int streak;
@@ -18,8 +19,8 @@ public class Habit extends Goal{
     }
 
     public Habit() {
-        scheduledDays = new LinkedHashMap<>();
-        completedDays = new LinkedHashMap<>();
+        scheduledDays = new HashMap<>();
+        completedDays = new HashMap<>();
         for (int i = 0;i < 7;i++){
             scheduledDays.put(days[i], false);
             completedDays.put(days[i], false);
@@ -28,8 +29,8 @@ public class Habit extends Goal{
 
     public Habit(String description) {
         setDescription(description);
-        scheduledDays = new LinkedHashMap<>();
-        completedDays = new LinkedHashMap<>();
+        scheduledDays = new HashMap<>();
+        completedDays = new HashMap<>();
         for (int i = 0;i < 7;i++){
             scheduledDays.put(days[i], false);
             completedDays.put(days[i], false);

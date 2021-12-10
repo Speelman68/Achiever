@@ -48,7 +48,7 @@
             android:name=".calendar.WeekViewActivity"
             android:exported="false" />
         <activity
-            android:name=".Firebase.FireBaseLoginActivity"
+            android:name=".FireBaseLoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

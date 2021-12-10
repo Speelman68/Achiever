@@ -41,9 +41,6 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     private GoogleSignInAccount googleAccount;
     private GoogleSignInClient mGoogleSignInClient;
 
-//    private SharedPreferences mPrefs = getSharedPreferences("cloud", 0);
-//    private SharedPreferences.Editor mEditor = mPrefs.edit();
-
     private FireBaseCloud mCloud;
 
     private String currentUserEmail = "";
@@ -62,7 +59,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     private Button deleteAcntPress;
 
 
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"; //Pattern for correct email
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 
     @Override
@@ -139,9 +136,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
-        currentUser = mAuth.getCurrentUser();
-        googleAccount = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(currentUser);
+        currentUser = mAuth.getCurrentUser(); //Get the current user if there is one
+        //googleAccount = GoogleSignIn.getLastSignedInAccount(this); //Not working right now
+        updateUI(currentUser); //Update UI depending on if there is someone logged in
         showHidePress.setText("Show");
 
         mCloud = new FireBaseCloud();
@@ -152,10 +149,12 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     //Function to Show or hide password
     private void showHidePass() {
         if(showHidePress.getText() == "Show"){
+                //Turn the password into dots.
                 passwordString.setTransformationMethod(new HideReturnsTransformationMethod());
                 confirmPasswordString.setTransformationMethod(new HideReturnsTransformationMethod());
                 showHidePress.setText("Hide");
         } else{
+                //Turn the password into letters
                 confirmPasswordString.setTransformationMethod(new PasswordTransformationMethod());
                 passwordString.setTransformationMethod(new PasswordTransformationMethod());
                 showHidePress.setText("Show");
@@ -163,11 +162,14 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     }
 
     private boolean validEmail() {
+        //Check to see if the User has signed in already
         if(signInPress.getText().equals("Sign In")) {
+            //Check to see if the email string is empty
             if(emailString.getText().toString().isEmpty()) {
                 Toast.makeText(FireBaseLoginActivity.this, "Enter Email Address", Toast.LENGTH_SHORT).show();
                 return false;
             }else {
+                //Check to see if the email matches a correct email pattern ex. "test@test.com"
                 if (emailString.getText().toString().trim().matches(emailPattern)) {
                     return true;
                 } else {
@@ -180,7 +182,9 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     }
 
     private boolean validPassword() {
+        //Check to see if user has already signed in
         if(signInPress.getText().equals("Sign In")) {
+            //Check to see if password is 6 Characters or longer
             if(passwordString.getText().toString().length() < 6) {
                 Toast.makeText(FireBaseLoginActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                 return false;
@@ -197,6 +201,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     validates them, and then creates a new user with the createUserWithEmailAndPassword method.*/
     private void createAccount(String email, String password)
     {
+        //Check to see if the user pressed the Cancel button
         if(cancelPress.getVisibility() == View.GONE)
         {
             emailString.setText("");
@@ -225,6 +230,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
                                 confirmPasswordString.setText("");
                                 updateUI(currentUser);
                             }
+                            //Checking to make sure password and confirm password match
                             else if(!passwordString.getText().toString().equals(confirmPasswordString.getText().toString()))
                             {
                                 Toast.makeText(FireBaseLoginActivity.this, "Password did not match", Toast.LENGTH_SHORT).show();
@@ -259,6 +265,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         if(validEmail() && validPassword())
         {
             try{
+                //Check to see if the UI is updated already
                 if (signInPress.getText() == "Sign In") {
                     mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(FireBaseLoginActivity.this, task -> {
@@ -268,6 +275,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
                                     ((User) this.getApplication()).setEmail(email);
                                     //mEditor.putString("cloud", email);
                                     startActivity(new Intent(this, MainActivity.class));
+                                    mCloud.getUserData();
                                 }else {
                                     Toast.makeText(FireBaseLoginActivity.this, "Unable to Login", Toast.LENGTH_SHORT).show();
                                 }

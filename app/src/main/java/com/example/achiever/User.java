@@ -14,6 +14,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class User extends Application {
@@ -23,18 +24,23 @@ public class User extends Application {
     Gson gson = new Gson();
 
     private String email;
-    private String habit;
-    private String goal;
+    private HashMap scheduledDays;
+    private HashMap completedDays;
+    private String habitDescription;
+    private String habitReward;
+    private int streak;
+
+    private String goalDate;
+    private String goalDescription;
+
 
     public User(){
 
     }
 
-    public User(String email, String habit, String goal)
+    public User(String email, HashMap habit, HashMap goal)
     {
         this.email = email;
-        this.habit = habit;
-        this.goal = goal;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -58,18 +64,63 @@ public class User extends Application {
         return email;
     }
 
-    public String getHabit() {
-        return habit;
-    }
-
-    public String getGoal() {
-        return goal;
-    }
-
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
+    public HashMap getScheduledDays() {
+        return scheduledDays;
+    }
 
+    public void setScheduledDays(HashMap scheduledDays) {
+        this.scheduledDays = scheduledDays;
+    }
+
+    public HashMap getCompletedDays() {
+        return completedDays;
+    }
+
+    public void setCompletedDays(HashMap completedDays) {
+        this.completedDays = completedDays;
+    }
+
+    public String getHabitDescription() {
+        return habitDescription;
+    }
+
+    public void setHabitDescription(String habitDescription) {
+        this.habitDescription = habitDescription;
+    }
+
+    public String getHabitReward() {
+        return habitReward;
+    }
+
+    public void setHabitReward(String habitReward) {
+        this.habitReward = habitReward;
+    }
+
+    public int getStreak() {
+        return streak;
+    }
+
+    public void setStreak(int streak) {
+        this.streak = streak;
+    }
+
+    public String getGoalDate() {
+        return goalDate;
+    }
+
+    public void setGoalDate(String goalDate) {
+        this.goalDate = goalDate;
+    }
+
+    public String getGoalDescription() {
+        return goalDescription;
+    }
+
+    public void setGoalDescription(String goalDescription) {
+        this.goalDescription = goalDescription;
+    }
 }

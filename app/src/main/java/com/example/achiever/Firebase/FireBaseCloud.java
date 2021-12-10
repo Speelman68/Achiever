@@ -37,6 +37,7 @@ public class FireBaseCloud {
 
     }
 
+    //Constructor that includes an email
     public FireBaseCloud(String email) {
         db = FirebaseFirestore.getInstance();
         user = new HashMap<>();
@@ -50,12 +51,13 @@ public class FireBaseCloud {
     public void setup() {
         // [START set_firestore_settings]
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
+                .setPersistenceEnabled(true) //Sets up offline storage
                 .build();
         db.setFirestoreSettings(settings);
         // [END set_firestore_settings]
     }
 
+    //Delete all data under the email in Firebase Cloud
     public void deleteData(String email)
     {
         db.collection("users").document(email)
@@ -74,9 +76,12 @@ public class FireBaseCloud {
                 });
     }
 
+    //Save Email to Firestore cloud as a new user
     public void saveEmail(String email) {
+        //Put information in the user hashmap
         user.put("email", email);
 
+        //Save the email into a new user in the database in firestore cloud
         db.collection("users").document(email).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -91,14 +96,16 @@ public class FireBaseCloud {
 
     }
 
+    //Save a habit in Firestore Cloud including all variables in the habit this is stored as a HashMap
     public void saveHabit(HashMap scheduledDays, HashMap completedDays, String description, String reward, int streak)
     {
+        //Put information in the HashMap "habit"
         habit.put("scheduledDays", scheduledDays);
         habit.put("completedDays", completedDays);
         habit.put("description", description);
         habit.put("reward", reward);
         habit.put("streak", streak);
-        if(email != null)
+        if(email != null) //Check if user is logged in
         {
             db.collection("users").document(email).collection("objectives").document("habit").set(habit).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -119,12 +126,13 @@ public class FireBaseCloud {
 
     }
 
+    //Save a Goal in Firestore Cloud including all variables in the habit this is stored as a HashMap
     public void saveGoal(String date, String description)
     {
         goal.put("date", date);
         goal.put("description", description);
 
-        if(email != null)
+        if(email != null) //Check if there is a user logged in
         {
             db.collection("users").document(email).collection("objectives").document("goal").set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -144,6 +152,7 @@ public class FireBaseCloud {
         }
     }
 
+    //This function is not working.
     public void getEmail(String email) {
         DocumentReference emailRef = db.collection("users").document(email);
         emailRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -151,6 +160,17 @@ public class FireBaseCloud {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
                 String tempEmail = user.getEmail();
+            }
+        });
+    }
+
+    //Retrieve all user data stored in Firestore cloud and save it to variables inside of the user class
+    public void getUserData() {
+        DocumentReference docRef = db.collection("cities").document("BJ");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
             }
         });
     }

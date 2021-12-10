@@ -32,7 +32,7 @@ public class DisplayHabit extends AppCompatActivity {
         addNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do something
+                //Set slot to -1 so the design will make a new habit
                 user.slot = -1;
                 Intent habitIntent = new Intent(DisplayHabit.this, DesignHabit.class);
                 startActivity(habitIntent);

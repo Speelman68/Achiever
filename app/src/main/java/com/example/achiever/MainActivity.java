@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity{
     Gson gson = new Gson();
     DateHandler dateHandler = new DateHandler();
 
+    private static String email;
+
     @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
     @Override
     protected void onCreate(Bundle savedInstanceState) {

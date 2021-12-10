@@ -18,6 +18,8 @@ import com.example.achiever.R;
 import com.example.achiever.User;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DesignLongTerm extends AppCompatActivity
 
@@ -89,6 +91,8 @@ public class DesignLongTerm extends AppCompatActivity
     }
 
     public void saveLongTerm(View view) {
+
+
         // Saves the long term goal using the user reference.
         description = descriptionView.getText().toString();
         stringEndDate = dateButton.getText().toString();
@@ -101,7 +105,7 @@ public class DesignLongTerm extends AppCompatActivity
         else {
             user.longTerms.set(longTermSlot, newLongTerm);
         }
-        mCloud.saveGoal(description, stringEndDate);
+        mCloud.saveGoal(stringEndDate, description);
         finish();
     }
 }

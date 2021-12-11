@@ -151,7 +151,7 @@ public class TimerScreen extends AppCompatActivity {
                     Habit habit = user.habits.get(user.slot);
 
                     goalCompleted = true;
-                    Toast.makeText(TimerScreen.this, habit.getDescription() + "has been completed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TimerScreen.this, habit.getDescription() + " has been completed", Toast.LENGTH_LONG).show();
                 }
                 // Post the code again
                 // with a delay of 1 second.

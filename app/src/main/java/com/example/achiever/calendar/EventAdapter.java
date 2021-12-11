@@ -62,7 +62,6 @@ public class EventAdapter extends ArrayAdapter<Habit> {
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                habit.completedDays.put(dayS, true);
                 eventAdapter.notifyDataSetChanged();
                 user.slot = position;
 //                Intent timerIntent = new Intent(context, TimerScreen.class);

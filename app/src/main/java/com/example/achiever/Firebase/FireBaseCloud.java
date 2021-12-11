@@ -7,24 +7,37 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.achiever.User;
+import com.example.achiever.goals.Goal;
+import com.example.achiever.goals.Habit;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FireBaseCloud {
     private FirebaseFirestore db;
     private static final String TAG = "DocSnippets";
+    private static ArrayList<Habit> habitArray = new ArrayList<>();
+    private static ArrayList<Goal> goalArray = new ArrayList<>();
 
     private User currentUser = new User();
 
-    String email;
+    private static String email;
     Map<String, Object> user;
 
 
@@ -171,6 +184,52 @@ public class FireBaseCloud {
                 User user = documentSnapshot.toObject(User.class);
             }
         });
+    }
+    public void deleteHabit(String description)
+    {
+        db.collection("users").document(email).collection("Habit").document(description).delete()
+        .addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "Habit: " + description + "deleted");
+            }
+        });
+    }
+
+    public ArrayList getHabitData() {
+        if(email != null) {
+            db.collection("users").document(email).collection("Habit")
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+                            if (queryDocumentSnapshots.isEmpty()) {
+                                Log.d(TAG, "onSuccess: LIST EMPTY");
+                                return;
+                            } else {
+                                // Convert the whole Query Snapshot to a list
+                                // of objects directly! No need to fetch each
+                                // document.
+                                Log.d(TAG, "Success");
+                                for (QueryDocumentSnapshot types : queryDocumentSnapshots) {
+                                    Habit habits = types.toObject(Habit.class);
+                                    habitArray.add(habits);
+                                }
+                                // Add all to your list
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "Failed");
+                }
+            });
+        }
+        return habitArray;
+    }
+
+    public void getGoalData() {
+
     }
 }
 

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.achiever.Firebase.FireBaseCloud;
 import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.calendar.WeekViewActivity;
 import com.example.achiever.goals.DisplayHabit;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity{
     User user;
     Intent habitIntent;
     DateHandler dateHandler = new DateHandler();
-
+    private static FireBaseCloud mCloud = new FireBaseCloud();
+    private static  FireBaseLoginActivity fireBaseUser = new FireBaseLoginActivity();
     private static String email;
 
     @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
@@ -38,6 +40,16 @@ public class MainActivity extends AppCompatActivity{
         user = ((User) this.getApplication()); // Antonio: I used this for long term goal check.
         checkForGoals(); // Antonio: I used this for long term goal check.
         user.setLoginEmail();
+        email = fireBaseUser.getCurrentUserEmail();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkForGoals(); // Antonio: I used this for long term goal check.
+        email = fireBaseUser.getCurrentUserEmail();
     }
 
     public void settingButton(View view)
@@ -91,14 +103,6 @@ public class MainActivity extends AppCompatActivity{
         habitIntent = new Intent(this, WeekViewActivity.class);
         startActivity(habitIntent);
 
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkForGoals(); // Antonio: I used this for long term goal check.
     }
 
     public void myAlarm() {

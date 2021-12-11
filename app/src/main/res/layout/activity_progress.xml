@@ -13,7 +13,7 @@
         android:layout_height="66dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Habit' Started: "
+        android:text="Habit's Started: "
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"

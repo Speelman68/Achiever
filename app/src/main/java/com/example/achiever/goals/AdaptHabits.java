@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.example.achiever.Firebase.FireBaseCloud;
 import com.example.achiever.R;
 import com.example.achiever.User;
 
@@ -19,6 +20,7 @@ public class AdaptHabits extends BaseAdapter implements ListAdapter {
     private ArrayList<Habit> list;
     private Context context;
     private User user;
+    private FireBaseCloud mCloud = new FireBaseCloud();
     public AdaptHabits adaptHabits;
 
     public AdaptHabits(Context context, ArrayList<Habit> list, User user) {
@@ -70,6 +72,7 @@ public class AdaptHabits extends BaseAdapter implements ListAdapter {
         removebtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //mCloud.deleteHabit(user.habits.get(position).getDescription()); //Crashes app because the getDescription() function is returning null
                 user.habits.remove(position);
                 adaptHabits.notifyDataSetChanged();
             }

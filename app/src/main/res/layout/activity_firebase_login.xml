@@ -69,6 +69,7 @@
                 android:gravity="center"
                 android:text="@string/create_account"
                 android:textSize="12sp"
+                android:visibility="gone"
                 app:iconPadding="15dp" />
 
             <Button
@@ -92,7 +93,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="Delete Account"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent" />
 
 

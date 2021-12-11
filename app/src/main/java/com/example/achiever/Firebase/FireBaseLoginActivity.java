@@ -33,7 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class FireBaseLoginActivity extends AppCompatActivity {
 
     private static FirebaseAuth mAuth;
-
+    private  static User user;
 
     private static final String TAG = "EmailPassword";
     private static final int RC_SIGN_IN = 9001;
@@ -68,7 +68,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_firebase_login);
 
         mAuth = FirebaseAuth.getInstance();
-
+        user = ((User) this.getApplication());
         mCloud = new FireBaseCloud();
         mCloud.setup();
 
@@ -290,6 +290,7 @@ public class FireBaseLoginActivity extends AppCompatActivity {
                                     //mEditor.putString("cloud", email);
                                     startActivity(new Intent(this, MainActivity.class));
                                     mCloud.getUserData();
+                                    user.habits = mCloud.getHabitData();
                                 }else {
                                     Toast.makeText(FireBaseLoginActivity.this, "Unable to Login", Toast.LENGTH_SHORT).show();
                                 }

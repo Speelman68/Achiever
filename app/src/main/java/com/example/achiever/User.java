@@ -38,7 +38,7 @@ public class User extends Application {
 
 
     public User(){
-
+        email = appUser.getCurrentUserEmail();
     }
 
     public User(String email, HashMap habit, HashMap goal)

@@ -15,42 +15,48 @@
             android:name=".progress.ProgressActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/Theme.Achiever.Goals"
             android:name=".journal.EntryEditorActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".Firebase.FireBaseLoginActivity"
             android:exported="false" />
         <activity
-            android:theme="@style/Theme.Achiever"
+            android:theme="@style/Theme.Achiever.Journal"
             android:name=".journal.JournalActivity"
             android:exported="false" />
         <activity
             android:name=".goals.GoalNotAchieved"
+            android:theme="@style/Theme.Achiever.Goals"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
-            android:taskAffinity="" />
+            android:taskAffinity=""/>
         <activity
             android:name=".goals.GoalAchieved"
+            android:theme="@style/Theme.Achiever.Goals"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
-            android:taskAffinity="" />
+            android:taskAffinity=""/>
         <activity
             android:name=".goals.GoalCompletionCheck"
+            android:theme="@style/Theme.Achiever.Goals"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
-            android:taskAffinity="" />
+            android:taskAffinity=""/>
         <activity
             android:name=".calendar.TimerScreen"
             android:exported="false" />
         <activity
             android:name=".goals.DesignLongTerm"
-            android:exported="false" />
+            android:theme="@style/Theme.Achiever.Goals"
+            android:exported="false"/>
         <activity
             android:name=".goals.DisplayLongTerm"
-            android:exported="false" /> <!-- android:theme="@style/Theme.Achiever"> -->
+            android:theme="@style/Theme.Achiever.Goals"
+            android:exported="false"/> <!-- android:theme="@style/Theme.Achiever"> -->
         <activity
             android:name=".goals.DesignHabit"
             android:exported="false" />

@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.R;
+import com.example.achiever.User;
 import com.example.achiever.goals.DesignHabit;
 import com.example.achiever.goals.DisplayHabit;
 import com.example.achiever.goals.Habit;
@@ -33,12 +34,12 @@ public class EventAdapter extends ArrayAdapter<Habit> {
     EventAdapter eventAdapter;
     private Context context;
     Intent intent;
+    User user;
 
-
-    public EventAdapter(@NonNull Context context, List<Habit> events)
+    public EventAdapter(@NonNull Context context, List<Habit> events, User user)
     {
-
         super(context, 0, events);
+        this.user = user;
     }
 
 
@@ -47,7 +48,6 @@ public class EventAdapter extends ArrayAdapter<Habit> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
     {
         Habit habit = getItem(position);
-
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_cell, parent, false);
 
@@ -64,14 +64,12 @@ public class EventAdapter extends ArrayAdapter<Habit> {
             public void onClick(View v) {
                 habit.completedDays.put(dayS, true);
                 eventAdapter.notifyDataSetChanged();
-
+                user.slot = position;
 //                Intent timerIntent = new Intent(context, TimerScreen.class);
 //                v.getContext().startActivity(timerIntent);
                 Intent timerIntent = new Intent(v.getContext(), TimerScreen.class);
                 timerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //This is not the best solution.
                 v.getContext().startActivity(timerIntent);
-
-
 
             }
         });

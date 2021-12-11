@@ -54,20 +54,21 @@ public class Habit extends Goal{
         mCloud.saveHabit(scheduledDays, completedDays, description, reward, 0);
     }
 
-
+    //Run this function once the activity is completed.
     public void updateStreak() {
         streak++;
         dailyCompletion = true;
     }
 
-
+    //This function gets run every night to check the streak;
     public void dailyCheck() {
+        String weekday_name = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
         if (dailyCompletion){
             dailyCompletion = false;
+            scheduledDays.put(weekday_name, true);
             return;
         }
 
-        String weekday_name = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
         if(!scheduledDays.get(weekday_name)){
             streak = 0;
         }

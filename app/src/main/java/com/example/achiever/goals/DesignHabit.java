@@ -39,12 +39,14 @@ public class DesignHabit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    //Load in a habit if the slot is greater than 0
     public void loadHabit() {
         if (user.slot < 0)
             return;
 
         habitSlot = user.slot;
 
+        //Use i for setting the checked day
         int i = 0;
         for (LinkedHashMap.Entry<String, Boolean> entry : user.habits.get(habitSlot).scheduledDays.entrySet()) {
             dayCheckBox.get(i).setChecked(entry.getValue());
@@ -56,7 +58,10 @@ public class DesignHabit extends AppCompatActivity {
         rewardView.setText(user.habits.get(habitSlot).getReward());
     }
 
+    //Make a list of the checkboxes
     private void checkDayList(){
+
+        //Check if the list is empty
         if (dayCheckBox != null)
             return;
 

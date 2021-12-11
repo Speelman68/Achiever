@@ -113,7 +113,7 @@
             android:layout_columnWeight="1"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/progress"
-            android:onClick="progressAction"
+            android:onClick="progressButton"
             android:padding="8dp"
             android:text="@string/progress"
             android:textColor="#FFFFFF" />

@@ -36,8 +36,9 @@ public class User extends Application {
     private String goalDescription;
 
 
+
     public User(){
-        email = appUser.getCurrentUserEmail();
+
     }
 
     public User(String email, HashMap habit, HashMap goal)
@@ -69,6 +70,8 @@ public class User extends Application {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setLoginEmail() {email = appUser.getCurrentUserEmail();}
 
     public HashMap getScheduledDays() {
         return scheduledDays;

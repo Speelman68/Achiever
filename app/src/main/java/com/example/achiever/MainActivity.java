@@ -17,6 +17,7 @@ import com.example.achiever.goals.DisplayHabit;
 import com.example.achiever.goals.DisplayLongTerm;
 import com.example.achiever.notifications.GoalCompletionNotification;
 import com.example.achiever.notifications.NotificationReceiver;
+import com.example.achiever.progress.ProgressActivity;
 import com.google.gson.Gson;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,11 +37,17 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         user = ((User) this.getApplication()); // Antonio: I used this for long term goal check.
         checkForGoals(); // Antonio: I used this for long term goal check.
+        user.setLoginEmail();
     }
 
     public void settingButton(View view)
     {
         startActivity(new Intent(this, FireBaseLoginActivity.class));
+    }
+
+    public void progressButton(View view)
+    {
+        startActivity(new Intent(this, ProgressActivity.class));
     }
 
 

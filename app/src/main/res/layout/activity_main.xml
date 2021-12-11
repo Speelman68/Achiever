@@ -39,6 +39,7 @@
             android:layout_columnWeight="1"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/journal"
+            android:onClick="startJournal"
             android:padding="8dp"
             android:text="@string/journal"
             android:textColor="#FDFDFD" />

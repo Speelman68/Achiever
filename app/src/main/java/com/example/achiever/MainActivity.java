@@ -40,16 +40,6 @@ public class MainActivity extends AppCompatActivity{
         user = ((User) this.getApplication()); // Antonio: I used this for long term goal check.
         checkForGoals(); // Antonio: I used this for long term goal check.
         user.setLoginEmail();
-        email = fireBaseUser.getCurrentUserEmail();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkForGoals(); // Antonio: I used this for long term goal check.
-        email = fireBaseUser.getCurrentUserEmail();
     }
 
     public void settingButton(View view)

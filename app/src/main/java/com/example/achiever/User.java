@@ -22,7 +22,6 @@ public class User extends Application {
     public static ArrayList<Habit> habits  = new ArrayList<>();
     public static ArrayList<LongTerm> longTerms = new ArrayList<>();
     public int slot = -1;
-    Gson gson = new Gson();
 
     private FireBaseLoginActivity appUser = new FireBaseLoginActivity();
 

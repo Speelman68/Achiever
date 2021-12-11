@@ -9,13 +9,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.achiever.R;
+import com.example.achiever.User;
+import com.example.achiever.goals.Habit;
 
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class TimerScreen extends AppCompatActivity {
     //   variables.
     int seconds = 0;
-
+    User user;
 
     private boolean running;
     private boolean wasRunning;
@@ -27,7 +30,7 @@ public class TimerScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer_screen);
-
+        user = ((User) this.getApplication());
         if (savedInstanceState != null){
             // Get the previous state of the stopwatch
             // if the activity has been
@@ -144,8 +147,11 @@ public class TimerScreen extends AppCompatActivity {
 
 
                 if(seconds > 30){
+                    user.habits.get(user.slot).updateStreak();
+                    Habit habit = user.habits.get(user.slot);
+
                     goalCompleted = true;
-                    Toast.makeText(TimerScreen.this, "Habit completed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TimerScreen.this, habit.getDescription() + "has been completed", Toast.LENGTH_LONG).show();
                 }
                 // Post the code again
                 // with a delay of 1 second.

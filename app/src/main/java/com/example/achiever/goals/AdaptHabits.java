@@ -40,8 +40,6 @@ public class AdaptHabits extends BaseAdapter implements ListAdapter {
     @Override
     public long getItemId(int pos) {
         return 0;
-        //OLD: list.get(pos).getId()
-        //just return 0 if your list items do not have an Id variable.
     }
 
     @Override

@@ -27,7 +27,7 @@ public class DisplayHabit extends AppCompatActivity {
 
         user = ((User) this.getApplication());
         setList();
-
+        //Set the button and click event for making a new habit
         Button addNewButton= (Button) findViewById(R.id.addNewHabit);
         addNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +40,7 @@ public class DisplayHabit extends AppCompatActivity {
         });
     }
 
+    //
     @Override
     public void onResume() {
         user = ((User) this.getApplication());
@@ -47,7 +48,7 @@ public class DisplayHabit extends AppCompatActivity {
         setList();
     }
 
-
+    //Display the habits
     private void setList() {
         list = user.habits;
         listView = (ListView) findViewById(R.id.listview);

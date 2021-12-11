@@ -28,10 +28,12 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        user = ((User) this.getApplication());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
         CalendarUtils.selectedDate = LocalDate.now();
@@ -77,7 +79,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     {
         //ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
         ArrayList<Habit> dailyEvents = User.habitsForDate(CalendarUtils.selectedDate);
-        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents, user);
         eventAdapter.eventAdapter = eventAdapter;
         eventListView.setAdapter(eventAdapter);
     }

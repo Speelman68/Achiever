@@ -24,9 +24,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity{
     User user;
-    Context context;
     Intent habitIntent;
-    Gson gson = new Gson();
     DateHandler dateHandler = new DateHandler();
 
     private static String email;
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity{
     public void myAlarm() {
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.HOUR_OF_DAY, 19);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 

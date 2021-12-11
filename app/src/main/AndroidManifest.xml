@@ -15,9 +15,13 @@
             android:name=".progress.ProgressActivity"
             android:exported="false" />
         <activity
+            android:name=".journal.EntryEditorActivity"
+            android:exported="false" />
+        <activity
             android:name=".Firebase.FireBaseLoginActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/Theme.Achiever"
             android:name=".journal.JournalActivity"
             android:exported="false" />
         <activity

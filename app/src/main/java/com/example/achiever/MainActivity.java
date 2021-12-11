@@ -16,6 +16,7 @@ import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.calendar.WeekViewActivity;
 import com.example.achiever.goals.DisplayHabit;
 import com.example.achiever.goals.DisplayLongTerm;
+import com.example.achiever.journal.JournalActivity;
 import com.example.achiever.notifications.GoalCompletionNotification;
 import com.example.achiever.notifications.NotificationReceiver;
 import com.example.achiever.progress.ProgressActivity;
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity{
     User user;
     Intent habitIntent;
     DateHandler dateHandler = new DateHandler();
-    String email = "";
     FireBaseCloud mCloud;
 
     //private SharedPreferences mPrefs = getSharedPreferences("cloud", 0);
@@ -69,6 +69,12 @@ public class MainActivity extends AppCompatActivity{
     {
         Intent longTermIntent = new Intent(this, DisplayLongTerm.class);
         startActivity(longTermIntent);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void startJournal(View view)
+    {
+        Intent journalIntent = new Intent(this, JournalActivity.class);
+        startActivity(journalIntent);
     }
     //-------------------------------------------------------------------//
     //---------Antonio: the next 2 methods are for goal checking---------//

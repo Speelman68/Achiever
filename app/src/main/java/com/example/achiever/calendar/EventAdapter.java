@@ -70,6 +70,7 @@ public class EventAdapter extends ArrayAdapter<Habit> {
                 timerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //This is not the best solution.
                 v.getContext().startActivity(timerIntent);
 
+
             }
         });
 

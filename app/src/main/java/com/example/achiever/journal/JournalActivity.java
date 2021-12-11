@@ -27,7 +27,6 @@ public class JournalActivity extends AppCompatActivity {
 
     static ArrayList<String> entries = new ArrayList<>();
     static ArrayAdapter arrayAdapter;
-    DateHandler dateHandler = new DateHandler();
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {

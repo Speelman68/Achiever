@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.example.achiever.DateHandler;
 import com.example.achiever.R;
 
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import java.util.HashSet;
 public class EntryEditorActivity extends AppCompatActivity {
 
     int entryId;
+    DateHandler dateHandler = new DateHandler();
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -31,7 +33,8 @@ public class EntryEditorActivity extends AppCompatActivity {
         if (entryId != -1) {
             editText.setText(JournalActivity.entries.get(entryId));
         } else {
-            JournalActivity.entries.add("");
+            String currentDate = dateHandler.getTodaysDate();
+            JournalActivity.entries.add(currentDate + ":" + "\n\n");
             entryId = JournalActivity.entries.size() - 1;
             JournalActivity.arrayAdapter.notifyDataSetChanged();
         }

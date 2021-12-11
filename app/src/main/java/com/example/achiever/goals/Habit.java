@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.TreeMap;
 
 public class Habit extends Goal{
     public HashMap<String,Boolean> scheduledDays;
@@ -15,7 +14,6 @@ public class Habit extends Goal{
     FireBaseCloud mCloud = new FireBaseCloud();
 
     String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    private boolean dailyCompletion;
     public int streak;
 
     @Override
@@ -51,26 +49,25 @@ public class Habit extends Goal{
         }
         setDescription(description);
         setReward(reward);
-        mCloud.saveHabit(scheduledDays, completedDays, description, reward, 0);
+        mCloud.saveHabit(scheduledDays, completedDays, description, reward, streak);
     }
 
     //Run this function once the activity is completed.
     public void updateStreak() {
         streak++;
-        dailyCompletion = true;
+        String weekday_name = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+        completedDays.put(weekday_name, true);
+        mCloud.saveHabit(scheduledDays, completedDays, getDescription(), getReward(), streak);
     }
 
     //This function gets run every night to check the streak;
     public void dailyCheck() {
         String weekday_name = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
-        if (dailyCompletion){
-            dailyCompletion = false;
-            scheduledDays.put(weekday_name, true);
-            return;
-        }
 
-        if(!scheduledDays.get(weekday_name)){
-            streak = 0;
-        }
+        if(scheduledDays.get(weekday_name))
+            if (!completedDays.get(weekday_name)) {
+                streak = 0;
+                mCloud.saveHabit(scheduledDays, completedDays, getDescription(), getReward(), streak);
+            }
     }
 }

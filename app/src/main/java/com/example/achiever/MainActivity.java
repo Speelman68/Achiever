@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity{
     //private SharedPreferences mPrefs = getSharedPreferences("cloud", 0);
     //private SharedPreferences.Editor mEditor = mPrefs.edit();
 
+    private static String email;
+
     @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
     @Override
     protected void onCreate(Bundle savedInstanceState) {

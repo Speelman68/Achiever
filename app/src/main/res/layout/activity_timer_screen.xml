@@ -4,79 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1F2B45"
     tools:context=".calendar.TimerScreen">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/time_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_round_timer_24" />
+
     <TextView
         android:id="@+id/time_view"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="215dp"
-        android:layout_marginEnd="137dp"
-        android:layout_marginBottom="471dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:text="00:00:00"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/start_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <!--    need to figure out what the onclick thing does-->
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/start_button"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="364dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="317dp"
+        android:layout_marginBottom="30dp"
         android:onClick="onClickStart"
         android:text="Start"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/stop_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/stop_button"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="451dp"
-        android:layout_marginEnd="106dp"
-        android:layout_marginBottom="230dp"
-        android:text="Stop"
+        android:layout_marginBottom="30dp"
+        android:onClick="onClickStop"
+        android:text="Pause"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/reset_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/reset_button"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="537dp"
-        android:layout_marginEnd="106dp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="90dp"
         android:onClick="onClickReset"
         android:text="Reset"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

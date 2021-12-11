@@ -32,18 +32,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class FireBaseLoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    private static FirebaseAuth mAuth;
 
 
     private static final String TAG = "EmailPassword";
     private static final int RC_SIGN_IN = 9001;
-    private FirebaseUser currentUser;
+    private static FirebaseUser currentUser;
     private GoogleSignInAccount googleAccount;
     private GoogleSignInClient mGoogleSignInClient;
 
-    private FireBaseCloud mCloud;
+    private static FireBaseCloud mCloud;
 
-    private String currentUserEmail = "";
+    private static String currentUserEmail;
 
     private EditText emailString;
     private EditText passwordString;
@@ -67,8 +67,15 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_login);
 
-        Intent i = new Intent(FireBaseLoginActivity.this, FireBaseCloud.class);
-        i.putExtra("email", currentUserEmail);
+        mAuth = FirebaseAuth.getInstance();
+
+        mCloud = new FireBaseCloud();
+        mCloud.setup();
+
+
+        currentUser = mAuth.getCurrentUser();
+
+        setCurrentUserEmail();
 
         passwordString =findViewById(R.id.editTextPassword);
         confirmPasswordString = findViewById(R.id.editTextConfirmPassword);
@@ -92,8 +99,8 @@ public class FireBaseLoginActivity extends AppCompatActivity {
        // mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         // [END config_signin]
 
-        //mCloud.setup();
-        mAuth = FirebaseAuth.getInstance();
+
+
 
 
         signInPress.setOnClickListener(view -> {
@@ -145,6 +152,13 @@ public class FireBaseLoginActivity extends AppCompatActivity {
 
     }
 
+    public void setCurrentUserEmail() {
+        currentUserEmail = currentUser.getEmail();
+    }
+
+    public String getCurrentUserEmail() {
+        return currentUserEmail;
+    }
 
     //Function to Show or hide password
     private void showHidePass() {
@@ -513,7 +527,5 @@ public class FireBaseLoginActivity extends AppCompatActivity {
         }
     }
 
-    public String getCurrentUserEmail() {
-        return currentUserEmail;
-    }
+
 }

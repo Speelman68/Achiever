@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.achiever.R;
 
@@ -15,7 +16,7 @@ public class TimerScreen extends AppCompatActivity {
     //   variables.
     int seconds = 0;
 
-    //    need to change wasRunning to a different name?
+
     private boolean running;
     private boolean wasRunning;
 
@@ -127,6 +128,7 @@ public class TimerScreen extends AppCompatActivity {
                 int hours = seconds / 3600;
                 int minutes = (seconds % 3600) / 60;
                 int secs = seconds % 60;
+                long millisec = 1000;
 
                 String time = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, secs);
 
@@ -136,21 +138,19 @@ public class TimerScreen extends AppCompatActivity {
 
                 // If running is true, increment the
                 // seconds variable.
-                if (running){
+                if (running == true){
                     seconds++;
                 }
 
-                if(seconds < 30){
-                    System.out.println(goalCompleted);
-                }
 
                 if(seconds > 30){
                     goalCompleted = true;
-                    System.out.println(goalCompleted);
+                    Toast.makeText(TimerScreen.this, "Habit completed", Toast.LENGTH_LONG).show();
                 }
                 // Post the code again
                 // with a delay of 1 second.
-                handler.postDelayed(this,1000);
+                handler.postDelayed(this,millisec);
+
             }
         });
 

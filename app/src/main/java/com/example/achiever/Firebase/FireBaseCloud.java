@@ -13,6 +13,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,26 +26,19 @@ public class FireBaseCloud {
 
     String email;
     Map<String, Object> user;
-    Map<String, Object> habit;
-    Map<String, Object> goal;
 
 
     public FireBaseCloud() {
         db = FirebaseFirestore.getInstance();
         user = new HashMap<>();
-        habit = new HashMap<>();
-        goal = new HashMap<>();
 
         email = currentUser.getEmail();
-
     }
 
     //Constructor that includes an email
     public FireBaseCloud(String email) {
         db = FirebaseFirestore.getInstance();
         user = new HashMap<>();
-        habit = new HashMap<>();
-        goal = new HashMap<>();
 
         this.email = email;
 
@@ -101,15 +95,16 @@ public class FireBaseCloud {
     //Save a habit in Firestore Cloud including all variables in the habit this is stored as a HashMap
     public void saveHabit(HashMap scheduledDays, HashMap completedDays, String description, String reward, int streak)
     {
+        Map<String, Object> data = new HashMap<>();
         //Put information in the HashMap "habit"
-        habit.put("scheduledDays", scheduledDays);
-        habit.put("completedDays", completedDays);
-        habit.put("description", description);
-        habit.put("reward", reward);
-        habit.put("streak", streak);
+        data.put("scheduledDays", scheduledDays);
+        data.put("completedDays", completedDays);
+        data.put("reward", reward);
+        data.put("streak", streak);
+
         if(email != null) //Check if user is logged in
         {
-            db.collection("users").document(email).collection("objectives").document("habit").set(habit).addOnSuccessListener(new OnSuccessListener<Void>() {
+            db.collection("users").document(email).collection("Habit").document(description).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Log.d(TAG, "Habit has been saved");
@@ -131,12 +126,13 @@ public class FireBaseCloud {
     //Save a Goal in Firestore Cloud including all variables in the habit this is stored as a HashMap
     public void saveGoal(String date, String description)
     {
-        goal.put("date", date);
-        goal.put("description", description);
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("date", date);
 
         if(email != null) //Check if there is a user logged in
         {
-            db.collection("users").document(email).collection("objectives").document("goal").set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+            db.collection("users").document(email).collection("Goals").document(description).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Log.d(TAG, "Goal has been saved");

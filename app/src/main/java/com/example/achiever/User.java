@@ -5,6 +5,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.calendar.Event;
 import com.example.achiever.goals.Habit;
 import com.example.achiever.goals.LongTerm;
@@ -23,6 +24,8 @@ public class User extends Application {
     public int slot = -1;
     Gson gson = new Gson();
 
+    private FireBaseLoginActivity appUser = new FireBaseLoginActivity();
+
     private static String email;
     private HashMap scheduledDays;
     private HashMap completedDays;
@@ -35,7 +38,7 @@ public class User extends Application {
 
 
     public User(){
-
+        email = appUser.getCurrentUserEmail();
     }
 
     public User(String email, HashMap habit, HashMap goal)

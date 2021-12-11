@@ -34,7 +34,8 @@ public class EntryEditorActivity extends AppCompatActivity {
             editText.setText(JournalActivity.entries.get(entryId));
         } else {
             String currentDate = dateHandler.getTodaysDate();
-            JournalActivity.entries.add(currentDate + ":" + "\n\n");
+            JournalActivity.entries.add("");
+            editText.setText(currentDate + ":");
             entryId = JournalActivity.entries.size() - 1;
             JournalActivity.arrayAdapter.notifyDataSetChanged();
         }

@@ -27,6 +27,8 @@ public class JournalActivity extends AppCompatActivity {
 
     static ArrayList<String> entries = new ArrayList<>();
     static ArrayAdapter arrayAdapter;
+    DateHandler dateHandler = new DateHandler();
+
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
@@ -59,7 +61,8 @@ public class JournalActivity extends AppCompatActivity {
         HashSet<String> set = (HashSet<String>) sharedPreferences.getStringSet("entries", null);
 
         if (set == null) {
-            entries.add("Example entry");
+            String currentDate = dateHandler.getTodaysDate();
+            entries.add(currentDate + ":" + "\n\n" + "Example entry");
         } else {
             entries = new ArrayList(set);
         }

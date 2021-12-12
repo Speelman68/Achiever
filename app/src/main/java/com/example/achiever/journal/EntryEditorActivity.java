@@ -22,6 +22,9 @@ public class EntryEditorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+        // If this is a new entry, the intent extra from JournalActivity will be null
+        // and the EditText will be blank (except for the date), otherwise it will be
+        // filled with the to-be-edited entry.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_editor);
 
@@ -43,11 +46,12 @@ public class EntryEditorActivity extends AppCompatActivity {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged (CharSequence s, int start, int count, int after) {
-
+                // Does nothing
             }
 
             @Override
             public void onTextChanged (CharSequence s, int start, int before, int count) {
+                // Automatically saves the entry using the arrayAdapter.
                 JournalActivity.entries.set(entryId, String.valueOf(s));
                 JournalActivity.arrayAdapter.notifyDataSetChanged();
 
@@ -59,7 +63,7 @@ public class EntryEditorActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged (Editable s) {
-
+                // Does nothing
             }
         });
     }

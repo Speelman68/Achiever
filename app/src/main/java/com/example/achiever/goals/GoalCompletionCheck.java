@@ -20,6 +20,10 @@ public class GoalCompletionCheck extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+        // This activity takes the goal position from the position list
+        // provided by the intent from the notification and locates the
+        // long term goal to be checked upon creation.
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal_completion_check);
 

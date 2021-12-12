@@ -37,21 +37,22 @@ public class MainActivity extends AppCompatActivity{
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        user = ((User) this.getApplication()); // Antonio: I used this for long term goal check.
-        checkForGoals(); // Antonio: I used this for long term goal check.
+        user = ((User) this.getApplication());
+        checkForGoals(); // Antonio: I used this for long term goal completion check.
         user.setLoginEmail();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
+    @RequiresApi(api = Build.VERSION_CODES.O)
 
     @Override
     protected void onResume() {
         super.onResume();
-        checkForGoals(); // Antonio: I used this for long term goal check.
+        checkForGoals(); // Antonio: I used this for long term goal completion check.
     }
 
     public void settingButton(View view)
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity{
         startActivity(longTermIntent);
     }
     //-------------------------------------------------------------------//
-    //---------Antonio: the next 2 methods are for goal checking---------//
+    //---------Antonio: the next method is for goal checking---------//
     //-------------------------------------------------------------------//
 
     @RequiresApi(api = Build.VERSION_CODES.O)

@@ -22,6 +22,10 @@ public class GoalAchieved extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+        // This activity takes the goal position from the position list
+        // provided by the intent from the GoalCompletionCheck activity
+        // and locates the long term goal to be removed upon creation.
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal_achieved);
 
@@ -35,7 +39,7 @@ public class GoalAchieved extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
+            // Removes the goal from the list and returns to the main menu
                 user.longTerms.remove(goalSlot);
 
                 Intent goBackToMain = new Intent(GoalAchieved.this, MainActivity.class);

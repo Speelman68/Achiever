@@ -23,6 +23,9 @@ public class GoalNotAchieved extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+        // This activity takes the goal position from the position list
+        // provided by the GoalCompletionCheck activity and locates the
+        // long term goal to be removed/edited upon creation.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal_not_achieved);
 
@@ -43,6 +46,7 @@ public class GoalNotAchieved extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // Opens the long term goal editor activity.
                 Intent longTermIntent = new Intent(GoalNotAchieved.this, DesignLongTerm.class);
                 longTermIntent.putExtra("Position", goalSlot);
                 v.getContext().startActivity(longTermIntent);
@@ -56,6 +60,7 @@ public class GoalNotAchieved extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // Removes the goal and displays the goal list.
                 user.longTerms.remove(goalSlot);
 
                 Context context = getApplicationContext();

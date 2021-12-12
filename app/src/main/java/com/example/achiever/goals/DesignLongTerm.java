@@ -39,6 +39,12 @@ public class DesignLongTerm extends AppCompatActivity
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+        // The activity linked to this class edits the long term and takes the intent from
+        // the display long term activity/goal not achieved activity.
+        // In case that it is a new goal the position will be null, so the fields will be blank.
+        // In case the position is not null, the fields will be filled with the description
+        // and the end date of the goal.
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_long_term);
         user = ((User) this.getApplication());

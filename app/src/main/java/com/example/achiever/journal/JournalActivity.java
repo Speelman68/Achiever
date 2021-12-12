@@ -32,7 +32,7 @@ public class JournalActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
-
+    // Adds the add_entry_menu.xml in which there is the option to add an entry.
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.add_entry_menu, menu);
 
@@ -41,7 +41,7 @@ public class JournalActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected (@NonNull MenuItem item) {
-
+    // Opens the entry editor activity.
         if(item.getItemId() == R.id.add_entry){
             Intent intent = new Intent(getApplicationContext(), EntryEditorActivity.class);
             startActivity(intent);
@@ -52,6 +52,7 @@ public class JournalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // The journal stores permanently the entries of the user using a HashSet with SharedPreferences
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal);
 
@@ -73,6 +74,7 @@ public class JournalActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                // One click opens the entry for edition
                 Intent intent = new Intent(getApplicationContext(), EntryEditorActivity.class);
                 intent.putExtra("entryId", position);
                 startActivity(intent);
@@ -82,7 +84,7 @@ public class JournalActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick (AdapterView<?> parent, View view, int position, long id) {
-
+                // When the user long clicks an entry, a removal confirm dialog appears.
                 final int itemToDelete = position;
 
                 new AlertDialog.Builder(JournalActivity.this)

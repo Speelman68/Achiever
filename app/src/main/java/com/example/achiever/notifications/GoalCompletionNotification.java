@@ -19,6 +19,7 @@ public class GoalCompletionNotification {
     int goalSlot;
 
     public GoalCompletionNotification (Context mContext, int goalSlot) {
+        // This notification takes a constant and the goal position in the list as parameters.
         this.mContext = mContext;
         this.goalSlot = goalSlot;
     }
@@ -26,7 +27,7 @@ public class GoalCompletionNotification {
 
     public void createNotification()
     {
-
+        //Sets a pending intent with a flag, the context, the position and the request code.
         Intent intent = new Intent(mContext, GoalCompletionCheck.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("goalSlot", goalSlot);
@@ -34,6 +35,7 @@ public class GoalCompletionNotification {
                 0 /* Request code */, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
+        //Builds the notification design and sets the pending intent within it.
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher);
         mBuilder.setContentTitle("Today's the finish date of one of your goals")
@@ -41,6 +43,7 @@ public class GoalCompletionNotification {
                 .setAutoCancel(false)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentIntent(resultPendingIntent);
+
 
         NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 

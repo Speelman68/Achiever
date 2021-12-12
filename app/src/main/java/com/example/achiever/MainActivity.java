@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity{
     private static  FireBaseLoginActivity fireBaseUser = new FireBaseLoginActivity();
     private static String email;
 
-    @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,14 @@ public class MainActivity extends AppCompatActivity{
         user = ((User) this.getApplication()); // Antonio: I used this for long term goal check.
         checkForGoals(); // Antonio: I used this for long term goal check.
         user.setLoginEmail();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O) // Antonio: I used this for long term goal check.
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkForGoals(); // Antonio: I used this for long term goal check.
     }
 
     public void settingButton(View view)

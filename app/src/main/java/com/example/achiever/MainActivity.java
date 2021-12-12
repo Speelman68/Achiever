@@ -16,6 +16,7 @@ import com.example.achiever.Firebase.FireBaseLoginActivity;
 import com.example.achiever.calendar.WeekViewActivity;
 import com.example.achiever.goals.DisplayHabit;
 import com.example.achiever.goals.DisplayLongTerm;
+import com.example.achiever.journal.JournalActivity;
 import com.example.achiever.notifications.GoalCompletionNotification;
 import com.example.achiever.notifications.NotificationReceiver;
 import com.example.achiever.progress.ProgressActivity;
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity{
     public void progressButton(View view)
     {
         startActivity(new Intent(this, ProgressActivity.class));
+    }
+    public void startJournal(View view)
+    {
+        startActivity(new Intent(this, JournalActivity.class));
     }
 
 

@@ -152,7 +152,10 @@ public class FireBaseLoginActivity extends AppCompatActivity {
     }
 
     public void setCurrentUserEmail() {
-        currentUserEmail = currentUser.getEmail();
+        if(currentUser != null)
+        {
+            currentUserEmail = currentUser.getEmail();
+        }
     }
 
     public String getCurrentUserEmail() {
